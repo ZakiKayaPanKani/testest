@@ -28,6 +28,7 @@ export default function AuthorBadge({ artistId, artistName, size = "sm" }: Autho
       <Link
         href={`/artists/${artistId}`}
         className="text-xs text-gray-600 hover:text-indigo-600 transition-colors truncate"
+        onClick={(e) => e.stopPropagation()}
       >
         {artistName}
       </Link>

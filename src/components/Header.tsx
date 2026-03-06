@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BRAND } from "@/lib/brand";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -18,7 +19,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Artli
+              {BRAND.name}
             </span>
           </Link>
 

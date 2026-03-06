@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getFeaturedArtworks, getFeaturedArtists } from "@/lib/mock";
 import ArtworkCard from "@/components/ArtworkCard";
 import ArtistCard from "@/components/ArtistCard";
+import { BRAND } from "@/lib/brand";
 
 export default function HomePage() {
   const featuredWorks = getFeaturedArtworks(6);
@@ -13,12 +14,12 @@ export default function HomePage() {
       <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-            Artli
+            {BRAND.name}
           </h1>
           <p className="mt-4 text-lg sm:text-xl text-indigo-100 max-w-2xl mx-auto">
-            作家主体の条件付き正規取得プラットフォーム。
+            アーティストの作品を探索し、お気に入りを見つけよう。
             <br className="hidden sm:block" />
-            許諾条件を明示し、作品を安心して取得・活用できる場を提供します。
+            {BRAND.taglineJa}
           </p>
           <div className="mt-8 flex items-center justify-center gap-4">
             <Link
@@ -83,7 +84,7 @@ export default function HomePage() {
           作品を探してみましょう
         </h2>
         <p className="text-gray-500 mb-8 max-w-lg mx-auto">
-          許諾条件が明確な作品を閲覧し、安心して取得できます。
+          アーティストの作品を探索し、お気に入りを見つけよう。
         </p>
         <div className="flex items-center justify-center gap-4">
           <Link

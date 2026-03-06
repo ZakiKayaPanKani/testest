@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BRAND } from "@/lib/brand";
 
 export default function Footer() {
   return (
@@ -7,10 +8,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Artli
+              {BRAND.name}
             </span>
             <p className="mt-2 text-sm text-gray-500">
-              作家主体の条件付き正規取得プラットフォーム
+              {BRAND.taglineJa}
             </p>
           </div>
           <div>
@@ -42,7 +43,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 pt-4 border-t border-gray-200">
           <p className="text-xs text-gray-400 text-center">
-            &copy; 2025 Artli — Prototype
+            &copy; 2025 {BRAND.name} — Prototype
           </p>
         </div>
       </div>

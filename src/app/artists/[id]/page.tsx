@@ -73,9 +73,9 @@ export default async function ArtistDetailPage({ params }: ArtistDetailPageProps
 
       {/* Policy Summary */}
       <section className="mb-10">
-        <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-100">
-          <h2 className="text-sm font-semibold text-indigo-900 mb-2">Policy Summary</h2>
-          <p className="text-sm text-indigo-800">{artist.policySummary}</p>
+        <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+          <h2 className="text-xs font-semibold text-gray-700 mb-1">Policy Summary</h2>
+          <p className="text-xs text-gray-600">{artist.policySummary}</p>
         </div>
       </section>
 

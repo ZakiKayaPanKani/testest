@@ -19,6 +19,7 @@ export default function WorksFilter({ artworks }: WorksFilterProps) {
   const [training, setTraining] = useState<string>("All");
   const [sort, setSort] = useState<string>("New");
   const [search, setSearch] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filtered = artworks.filter((artwork) => {
     if (commercial !== "All" && artwork.licenseTerms.commercial !== commercial.toLowerCase()) return false;
@@ -41,7 +42,6 @@ export default function WorksFilter({ artworks }: WorksFilterProps) {
     <>
       {/* Filters */}
       <div className="bg-white rounded-xl border border-gray-200 p-4 mb-8 space-y-4">
-        <p className="text-xs text-gray-400">License Filters — 用途別に作品を絞り込めます</p>
         <div>
           <input
             type="text"
@@ -52,7 +52,15 @@ export default function WorksFilter({ artworks }: WorksFilterProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button
+          onClick={() => setFiltersOpen((prev) => !prev)}
+          className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          <span>License filters</span>
+          <span>{filtersOpen ? "▲" : "▼"}</span>
+        </button>
+
+        {filtersOpen && <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">用途: 商用</label>
             <div className="flex flex-wrap gap-1">
@@ -128,13 +136,13 @@ export default function WorksFilter({ artworks }: WorksFilterProps) {
               ))}
             </div>
           </div>
-        </div>
+        </div>}
       </div>
 
       <p className="text-sm text-gray-500 mb-4">{filtered.length} works found</p>
 
       {filtered.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {filtered.map((artwork) => (
             <ArtworkCard key={artwork.id} artwork={artwork} />
           ))}
