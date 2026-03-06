@@ -1,0 +1,8 @@
+# Artli Frontend Environment
+# Next.js app with Tailwind CSS, no backend/DB needed
+
+maintenance:
+  - command: "cd /home/ubuntu/repos/testest && npm install"
+    triggers:
+      - "package.json"
+      - "package-lock.json"
