@@ -13,7 +13,12 @@ interface WorkDetailTabsProps {
 }
 
 export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
-  const [activeTab, setActiveTab] = useState<"overview" | "license">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "license">(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#license") {
+      return "license";
+    }
+    return "overview";
+  });
 
   const priceJpy = artwork.priceJpy;
 
@@ -103,12 +108,12 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
               disabled
               title="Coming soon"
             >
-              Acquire (prototype)
+              Acquire license (prototype)
             </button>
           </div>
 
           <p className="text-xs text-gray-400">
-            ※ 取得機能は今後実装予定です
+            Terms shown here describe allowed usage.
           </p>
         </div>
       )}

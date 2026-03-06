@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BRAND } from "@/lib/brand";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,9 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Artli — 作家主体の条件付き正規取得プラットフォーム",
-  description:
-    "Artli は作家が設定した許諾条件のもとで作品を正規取得できるプラットフォームです。",
+  title: `${BRAND.name} — ${BRAND.taglineJa}`,
+  description: `${BRAND.name} — ${BRAND.tagline}`,
 };
 
 export default function RootLayout({
