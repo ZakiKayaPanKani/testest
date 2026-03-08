@@ -1,13 +1,16 @@
 import Link from "next/link";
-import { getFeaturedWorks, getFeaturedArtists } from "@/lib/queries";
+import { getFeaturedWorks, getFeaturedArtists, getSidebarData } from "@/lib/queries";
 import ArtworkCard from "@/components/ArtworkCard";
 import ArtistCard from "@/components/ArtistCard";
 import Sidebar from "@/components/Sidebar";
 import { BRAND } from "@/lib/brand";
 
 export default async function HomePage() {
-  const featuredWorks = await getFeaturedWorks(6);
-  const featuredArtists = await getFeaturedArtists(4);
+  const [featuredWorks, featuredArtists, sidebarData] = await Promise.all([
+    getFeaturedWorks(6),
+    getFeaturedArtists(4),
+    getSidebarData(),
+  ]);
 
   return (
     <div>
@@ -41,7 +44,7 @@ export default async function HomePage() {
 
       {/* Main content with sidebar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex gap-8">
-        <Sidebar className="hidden lg:block flex-shrink-0" />
+        <Sidebar className="hidden lg:block flex-shrink-0" data={sidebarData} />
         <div className="flex-1 min-w-0">
           {/* Featured Works */}
           <section>

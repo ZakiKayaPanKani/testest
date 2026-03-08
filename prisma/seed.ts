@@ -1,15 +1,6 @@
-import { PrismaClient } from "../src/generated/prisma/client.js";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import path from "path";
-import { fileURLToPath } from "url";
+import { PrismaClient } from "@prisma/client";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.resolve(__dirname, "..", "dev.db");
-
-const adapter = new PrismaBetterSqlite3({
-  url: `file:${dbPath}`,
-});
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient();
 
 async function main() {
   // Clean all tables in reverse dependency order
@@ -103,8 +94,8 @@ async function main() {
       displayName: "Yuki Tanaka",
       bio: "東京を拠点に活動するイラストレーター。幻想的な風景とキャラクターデザインを得意としています。",
       iconUrl: "https://picsum.photos/seed/artist1/200/200",
-      links: JSON.stringify(["https://twitter.com/yukitanaka", "https://yukitanaka.artstation.com"]),
-      styleTags: JSON.stringify(["Fantasy", "Landscape", "Character"]),
+      links: ["https://twitter.com/yukitanaka", "https://yukitanaka.artstation.com"],
+      styleTags: ["Fantasy", "Landscape", "Character"],
       policySummary: "商用利用は応相談。軽量学習のみ許可。",
     },
   });
@@ -115,8 +106,8 @@ async function main() {
       displayName: "Haruto Sato",
       bio: "コンセプトアーティスト。SFとメカデザインを中心に制作。ゲーム業界での経験多数。",
       iconUrl: "https://picsum.photos/seed/artist2/200/200",
-      links: JSON.stringify(["https://twitter.com/harutosato"]),
-      styleTags: JSON.stringify(["Sci-Fi", "Mecha", "Concept Art"]),
+      links: ["https://twitter.com/harutosato"],
+      styleTags: ["Sci-Fi", "Mecha", "Concept Art"],
       policySummary: "商用利用可。学習利用はスタンダードまで許可。再配布は不可。",
     },
   });
@@ -127,8 +118,8 @@ async function main() {
       displayName: "Mio Hayashi",
       bio: "水彩タッチのデジタルアートを制作。自然や動物をモチーフにした作品が多い。",
       iconUrl: "https://picsum.photos/seed/artist3/200/200",
-      links: JSON.stringify(["https://mio-hayashi.com", "https://instagram.com/miohayashi"]),
-      styleTags: JSON.stringify(["Watercolor", "Nature", "Animals"]),
+      links: ["https://mio-hayashi.com", "https://instagram.com/miohayashi"],
+      styleTags: ["Watercolor", "Nature", "Animals"],
       policySummary: "商用利用可。成人向け不可。学習は軽量のみ。",
     },
   });
@@ -139,8 +130,8 @@ async function main() {
       displayName: "Ren Kimura",
       bio: "ストリートアートとグラフィティに影響を受けたデジタルアーティスト。大胆な色使いが特徴。",
       iconUrl: "https://picsum.photos/seed/artist4/200/200",
-      links: JSON.stringify(["https://twitter.com/renkimura"]),
-      styleTags: JSON.stringify(["Street Art", "Pop Art", "Bold Colors"]),
+      links: ["https://twitter.com/renkimura"],
+      styleTags: ["Street Art", "Pop Art", "Bold Colors"],
       policySummary: "全利用応相談。作品ごとに条件が異なります。",
     },
   });
@@ -151,8 +142,8 @@ async function main() {
       displayName: "Sakura Ito",
       bio: "アニメスタイルのイラストレーター。キャラクターデザインと同人活動を中心に活動中。",
       iconUrl: "https://picsum.photos/seed/artist5/200/200",
-      links: JSON.stringify(["https://pixiv.net/users/sakuraito", "https://twitter.com/sakura_ito"]),
-      styleTags: JSON.stringify(["Anime", "Character Design", "Manga"]),
+      links: ["https://pixiv.net/users/sakuraito", "https://twitter.com/sakura_ito"],
+      styleTags: ["Anime", "Character Design", "Manga"],
       policySummary: "商用利用可。成人向け許可。学習はストロングまで許可。再配布可。",
     },
   });
@@ -163,8 +154,8 @@ async function main() {
       displayName: "Kaito Yamamoto",
       bio: "抽象画とジェネラティブアートを融合させた作品を制作。プログラミングとアートの境界を探求。",
       iconUrl: "https://picsum.photos/seed/artist6/200/200",
-      links: JSON.stringify(["https://kaito-art.dev"]),
-      styleTags: JSON.stringify(["Abstract", "Generative", "Digital"]),
+      links: ["https://kaito-art.dev"],
+      styleTags: ["Abstract", "Generative", "Digital"],
       policySummary: "商用利用不可。学習利用不可。個人鑑賞のみ。",
     },
   });
@@ -710,13 +701,13 @@ async function main() {
   // Helper to get license snapshot from a work
   async function getLicenseSnapshot(workId: string) {
     const license = await prisma.license.findUnique({ where: { workId } });
-    if (!license) return "{}";
-    return JSON.stringify({
+    if (!license) return {};
+    return {
       commercial: license.commercial,
       adult: license.adult,
       trainingType: license.trainingType,
       redistribution: license.redistribution,
-    });
+    };
   }
 
   // user-3 (Dev Studio) acquisitions: acq-1 to acq-4

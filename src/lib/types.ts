@@ -89,3 +89,11 @@ export interface DashboardAcquisition {
   priceJpy: number;
   licenseSnapshot: LicenseTerms;
 }
+
+// ─── Sidebar types ──────────────────────────────────────────────────────────
+
+export interface SidebarData {
+  trendingTags: { name: string; count: number }[];
+  featuredArtists: { slug: string; displayName: string; iconUrl: string }[];
+  newWorks: { slug: string; title: string; coverImageUrl: string }[];
+}
