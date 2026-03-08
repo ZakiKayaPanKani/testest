@@ -1,4 +1,7 @@
-import { LicenseTerms, LicenseValue, TrainingType } from "@/lib/mock";
+import type { LicenseTerms } from "@/lib/types";
+
+type LicenseValue = "allowed" | "denied" | "consult";
+type TrainingType = "light" | "standard" | "strong";
 
 function valueBadgeClass(value: LicenseValue): string {
   switch (value) {
