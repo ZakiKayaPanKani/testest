@@ -3,31 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { artworks, getFeaturedArtists, getFeaturedArtworks } from "@/lib/mock";
+import type { SidebarData } from "@/lib/types";
 
 interface SidebarProps {
   className?: string;
+  data: SidebarData;
 }
 
-// Collect all tags and count frequency
-function getTrendingTags(limit: number = 10): { tag: string; count: number }[] {
-  const tagCount: Record<string, number> = {};
-  for (const artwork of artworks) {
-    for (const tag of artwork.tags) {
-      tagCount[tag] = (tagCount[tag] || 0) + 1;
-    }
-  }
-  return Object.entries(tagCount)
-    .map(([tag, count]) => ({ tag, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, limit);
-}
-
-function SidebarContent() {
-  const trendingTags = getTrendingTags(10);
-  const featuredArtists = getFeaturedArtists(3);
-  const newWorks = getFeaturedArtworks(3);
-
+function SidebarContent({ data }: { data: SidebarData }) {
   return (
     <div className="space-y-6">
       {/* Trending Tags */}
@@ -36,13 +19,13 @@ function SidebarContent() {
           Trending Tags
         </h3>
         <div className="flex flex-wrap gap-1.5">
-          {trendingTags.map(({ tag }) => (
+          {data.trendingTags.map(({ name }) => (
             <Link
-              key={tag}
-              href={`/works?q=${encodeURIComponent(tag)}`}
+              key={name}
+              href={`/works?q=${encodeURIComponent(name)}`}
               className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
             >
-              {tag}
+              {name}
             </Link>
           ))}
         </div>
@@ -54,22 +37,22 @@ function SidebarContent() {
           Featured Artists
         </h3>
         <div className="space-y-3">
-          {featuredArtists.map((artist) => (
+          {data.featuredArtists.map((artist) => (
             <Link
-              key={artist.id}
-              href={`/artists/${artist.id}`}
+              key={artist.slug}
+              href={`/artists/${artist.slug}`}
               className="flex items-center gap-2.5 group"
             >
               <Image
                 src={artist.iconUrl}
-                alt={artist.name}
+                alt={artist.displayName}
                 width={28}
                 height={28}
                 className="rounded-full flex-shrink-0"
                 unoptimized
               />
               <span className="text-sm text-gray-700 group-hover:text-indigo-600 transition-colors truncate">
-                {artist.name}
+                {artist.displayName}
               </span>
             </Link>
           ))}
@@ -82,14 +65,14 @@ function SidebarContent() {
           New Works
         </h3>
         <div className="space-y-3">
-          {newWorks.map((work) => (
+          {data.newWorks.map((work) => (
             <Link
-              key={work.id}
-              href={`/works/${work.id}`}
+              key={work.slug}
+              href={`/works/${work.slug}`}
               className="flex items-center gap-2.5 group"
             >
               <Image
-                src={work.imageUrl}
+                src={work.coverImageUrl}
                 alt={work.title}
                 width={40}
                 height={30}
@@ -140,14 +123,14 @@ function SidebarContent() {
   );
 }
 
-export default function Sidebar({ className }: SidebarProps) {
+export default function Sidebar({ className, data }: SidebarProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <>
       {/* Desktop sidebar */}
       <aside className={`w-64 ${className ?? ""}`}>
-        <SidebarContent />
+        <SidebarContent data={data} />
       </aside>
 
       {/* Mobile toggle button */}
@@ -184,7 +167,7 @@ export default function Sidebar({ className }: SidebarProps) {
                 </svg>
               </button>
             </div>
-            <SidebarContent />
+            <SidebarContent data={data} />
           </div>
         </div>
       )}

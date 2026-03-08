@@ -5,6 +5,7 @@ import type {
   ArtistWithWorks,
   LicenseValue,
   TrainingType,
+  SidebarData,
 } from "@/lib/types";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -143,8 +144,8 @@ export async function getAllArtists(): Promise<ArtistForCard[]> {
     displayName: a.displayName,
     bio: a.bio,
     iconUrl: a.iconUrl,
-    links: JSON.parse(a.links) as string[],
-    styleTags: JSON.parse(a.styleTags) as string[],
+    links: a.links as string[],
+    styleTags: a.styleTags as string[],
     policySummary: a.policySummary,
     worksCount: a._count.works,
     previewImageUrl: a.works[0]?.coverImageUrl ?? null,
@@ -176,8 +177,8 @@ export async function getArtistBySlug(slug: string): Promise<ArtistWithWorks | n
     displayName: artist.displayName,
     bio: artist.bio,
     iconUrl: artist.iconUrl,
-    links: JSON.parse(artist.links) as string[],
-    styleTags: JSON.parse(artist.styleTags) as string[],
+    links: artist.links as string[],
+    styleTags: artist.styleTags as string[],
     policySummary: artist.policySummary,
     works: artist.works.map(toWorkForCard),
   };
@@ -249,7 +250,7 @@ export async function getArtistProfileByUserSlug(userSlug: string) {
   return {
     displayName: user.artistProfile.displayName,
     bio: user.artistProfile.bio,
-    styleTags: JSON.parse(user.artistProfile.styleTags) as string[],
+    styleTags: user.artistProfile.styleTags as string[],
     policySummary: user.artistProfile.policySummary,
   };
 }
@@ -305,9 +306,10 @@ export async function getDeveloperProfileByUserSlug(userSlug: string) {
 
 // ─── License Summary Helpers ────────────────────────────────────────────────
 
-function formatLicenseSummary(snapshotJson: string): string {
+function formatLicenseSummary(snapshot: unknown): string {
   try {
-    const s = JSON.parse(snapshotJson) as {
+    const raw = typeof snapshot === "string" ? JSON.parse(snapshot) : snapshot;
+    const s = raw as {
       commercial: string;
       adult: string;
       trainingType: string;
@@ -329,11 +331,49 @@ function formatLicenseSummary(snapshotJson: string): string {
   }
 }
 
-function isCommercialAllowed(snapshotJson: string): boolean {
+function isCommercialAllowed(snapshot: unknown): boolean {
   try {
-    const s = JSON.parse(snapshotJson) as { commercial: string };
+    const raw = typeof snapshot === "string" ? JSON.parse(snapshot) : snapshot;
+    const s = raw as { commercial: string };
     return s.commercial === "allowed";
   } catch {
     return false;
   }
+}
+
+// ─── Sidebar Query ──────────────────────────────────────────────────────────
+
+export async function getSidebarData(): Promise<SidebarData> {
+  const [tags, artists, works] = await Promise.all([
+    prisma.tag.findMany({
+      include: { _count: { select: { works: true } } },
+      orderBy: { works: { _count: "desc" } },
+      take: 10,
+    }),
+    prisma.artistProfile.findMany({
+      select: { slug: true, displayName: true, iconUrl: true },
+      take: 3,
+      orderBy: { createdAt: "asc" },
+    }),
+    prisma.work.findMany({
+      where: { status: "public" },
+      select: { slug: true, title: true, coverImageUrl: true },
+      orderBy: { createdAt: "desc" },
+      take: 3,
+    }),
+  ]);
+
+  return {
+    trendingTags: tags.map((t) => ({ name: t.name, count: t._count.works })),
+    featuredArtists: artists.map((a) => ({
+      slug: a.slug,
+      displayName: a.displayName,
+      iconUrl: a.iconUrl,
+    })),
+    newWorks: works.map((w) => ({
+      slug: w.slug,
+      title: w.title,
+      coverImageUrl: w.coverImageUrl,
+    })),
+  };
 }

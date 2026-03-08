@@ -1,15 +1,6 @@
-import { PrismaClient } from "../src/generated/prisma/client.js";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import path from "path";
-import { fileURLToPath } from "url";
+import { PrismaClient } from "@prisma/client";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.resolve(__dirname, "..", "dev.db");
-
-const adapter = new PrismaBetterSqlite3({
-  url: `file:${dbPath}`,
-});
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient();
 
 async function main() {
   // Clean all tables in reverse dependency order
@@ -710,13 +701,13 @@ async function main() {
   // Helper to get license snapshot from a work
   async function getLicenseSnapshot(workId: string) {
     const license = await prisma.license.findUnique({ where: { workId } });
-    if (!license) return "{}";
-    return JSON.stringify({
+    if (!license) return {};
+    return {
       commercial: license.commercial,
       adult: license.adult,
       trainingType: license.trainingType,
       redistribution: license.redistribution,
-    });
+    };
   }
 
   // user-3 (Dev Studio) acquisitions: acq-1 to acq-4

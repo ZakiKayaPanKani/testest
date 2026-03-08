@@ -2,12 +2,11 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model User {
@@ -32,8 +31,8 @@ model ArtistProfile {
   displayName   String
   bio           String
   iconUrl       String
-  links         String   @default("[]")
-  styleTags     String   @default("[]")
+  links         Json     @default("[]")  // string[] as JSON
+  styleTags     Json     @default("[]")  // string[] as JSON
   policySummary String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -94,7 +93,7 @@ model Acquisition {
   workId             String
   work               Work     @relation(fields: [workId], references: [id])
   priceJpy           Int
-  licenseSnapshot    String
+  licenseSnapshot    Json     // { commercial, adult, trainingType, redistribution }
   acquiredAt         DateTime
   createdAt          DateTime @default(now())
 }
