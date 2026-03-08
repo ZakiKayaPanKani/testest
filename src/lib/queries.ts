@@ -184,21 +184,6 @@ export async function getArtistBySlug(slug: string): Promise<ArtistWithWorks | n
   };
 }
 
-export async function getAllWorkSlugs(): Promise<string[]> {
-  const works = await prisma.work.findMany({
-    where: { status: "public" },
-    select: { slug: true },
-  });
-  return works.map((w) => w.slug);
-}
-
-export async function getAllArtistSlugs(): Promise<string[]> {
-  const artists = await prisma.artistProfile.findMany({
-    select: { slug: true },
-  });
-  return artists.map((a) => a.slug);
-}
-
 // ─── Dashboard Queries ──────────────────────────────────────────────────────
 
 export async function getDashboardWorksByUserSlug(userSlug: string) {

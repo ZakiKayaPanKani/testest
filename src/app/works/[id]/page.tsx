@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { getAllWorkSlugs, getWorkBySlug, getWorksByArtistSlug } from "@/lib/queries";
+import { getWorkBySlug, getWorksByArtistSlug } from "@/lib/queries";
 import ArtworkCard from "@/components/ArtworkCard";
 import WorkDetailTabs from "@/components/WorkDetailTabs";
-
-export async function generateStaticParams() {
-  const slugs = await getAllWorkSlugs();
-  return slugs.map((slug) => ({ id: slug }));
-}
 
 export async function generateMetadata({ params }: WorkDetailPageProps): Promise<Metadata> {
   const { id } = await params;

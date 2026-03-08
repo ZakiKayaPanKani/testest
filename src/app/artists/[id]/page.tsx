@@ -2,14 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getAllArtistSlugs, getArtistBySlug } from "@/lib/queries";
+import { getArtistBySlug } from "@/lib/queries";
 import TagPills from "@/components/TagPills";
 import ArtworkCard from "@/components/ArtworkCard";
-
-export async function generateStaticParams() {
-  const slugs = await getAllArtistSlugs();
-  return slugs.map((slug) => ({ id: slug }));
-}
 
 export async function generateMetadata({ params }: ArtistDetailPageProps): Promise<Metadata> {
   const { id } = await params;
