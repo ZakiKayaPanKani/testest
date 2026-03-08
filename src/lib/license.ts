@@ -1,5 +1,4 @@
-type LicenseValue = "allowed" | "denied" | "consult";
-type TrainingType = "light" | "standard" | "strong";
+import type { LicenseValue, TrainingType } from "@/lib/types";
 
 export function licenseValueText(value: LicenseValue): string {
   switch (value) {

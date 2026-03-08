@@ -1,7 +1,4 @@
-import type { LicenseTerms } from "@/lib/types";
-
-type LicenseValue = "allowed" | "denied" | "consult";
-type TrainingType = "light" | "standard" | "strong";
+import type { LicenseTerms, LicenseValue, TrainingType } from "@/lib/types";
 
 function valueBadgeClass(value: LicenseValue): string {
   switch (value) {

@@ -3,6 +3,8 @@ import type {
   WorkForCard,
   ArtistForCard,
   ArtistWithWorks,
+  LicenseValue,
+  TrainingType,
 } from "@/lib/types";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -48,10 +50,10 @@ function toWorkForCard(
     },
     license: w.license
       ? {
-          commercial: w.license.commercial,
-          adult: w.license.adult,
-          trainingType: w.license.trainingType,
-          redistribution: w.license.redistribution,
+          commercial: w.license.commercial as LicenseValue,
+          adult: w.license.adult as LicenseValue,
+          trainingType: w.license.trainingType as TrainingType,
+          redistribution: w.license.redistribution as LicenseValue,
           priceJpy: w.license.priceJpy,
         }
       : null,

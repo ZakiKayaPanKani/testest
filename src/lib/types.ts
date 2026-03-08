@@ -1,10 +1,13 @@
 // ─── Serialized types for passing from Server Components to Client Components ───
 
+export type LicenseValue = "allowed" | "denied" | "consult";
+export type TrainingType = "light" | "standard" | "strong";
+
 export interface LicenseTerms {
-  commercial: string;
-  adult: string;
-  trainingType: string;
-  redistribution: string;
+  commercial: LicenseValue;
+  adult: LicenseValue;
+  trainingType: TrainingType;
+  redistribution: LicenseValue;
 }
 
 export interface WorkForCard {
@@ -22,10 +25,10 @@ export interface WorkForCard {
     iconUrl: string;
   };
   license: {
-    commercial: string;
-    adult: string;
-    trainingType: string;
-    redistribution: string;
+    commercial: LicenseValue;
+    adult: LicenseValue;
+    trainingType: TrainingType;
+    redistribution: LicenseValue;
     priceJpy: number;
   } | null;
   tags: { name: string }[];
@@ -67,10 +70,10 @@ export interface DashboardWork {
   createdAt: string;
   acquisitionCount: number;
   license: {
-    commercial: string;
-    adult: string;
-    trainingType: string;
-    redistribution: string;
+    commercial: LicenseValue;
+    adult: LicenseValue;
+    trainingType: TrainingType;
+    redistribution: LicenseValue;
     priceJpy: number;
   } | null;
 }
