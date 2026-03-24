@@ -18,14 +18,13 @@ async function generateSlug(title: string): Promise<string> {
     .replace(/-+/g, "-")
     .slice(0, 40) || "work";
 
-  const suffix = Math.random().toString(36).slice(2, 8);
-  const slug = `${base}-${suffix}`;
-
-  const existing = await prisma.work.findUnique({ where: { slug } });
-  if (existing) {
-    return `${base}-${Math.random().toString(36).slice(2, 10)}`;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const suffix = Math.random().toString(36).slice(2, 8 + attempt);
+    const slug = `${base}-${suffix}`;
+    const existing = await prisma.work.findUnique({ where: { slug } });
+    if (!existing) return slug;
   }
-  return slug;
+  throw new Error("Failed to generate unique slug after multiple attempts");
 }
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
