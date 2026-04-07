@@ -4,7 +4,7 @@ import { getDashboardWorksByUserSlug, createWork } from "@/lib/queries";
 export async function GET(req: NextRequest) {
   const userSlug = req.nextUrl.searchParams.get("userSlug");
   if (!userSlug) {
-    return NextResponse.json({ error: "userSlug required" }, { status: 400 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const works = await getDashboardWorksByUserSlug(userSlug);
   return NextResponse.json({ works });
@@ -15,8 +15,12 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { userSlug, title, description, coverImageUrl, tags, license } = body;
 
-    if (!userSlug || !title) {
-      return NextResponse.json({ error: "userSlug and title are required" }, { status: 400 });
+    if (!userSlug) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    if (!title) {
+      return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
 
     if (!license || !license.commercial || !license.adult || !license.trainingType || !license.redistribution || license.priceJpy === undefined) {

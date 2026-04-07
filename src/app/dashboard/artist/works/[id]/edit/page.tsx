@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
 import WorkForm from "@/components/WorkForm";
@@ -23,8 +23,8 @@ interface WorkData {
   } | null;
 }
 
-export default function EditWorkPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function EditWorkPage() {
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const { user, isLoading } = useAuth();
   const [work, setWork] = useState<WorkData | null>(null);
@@ -144,7 +144,7 @@ export default function EditWorkPage({ params }: { params: Promise<{ id: string 
         </Link>
         <h1 className="text-3xl font-bold text-gray-900 mt-2">Edit Work</h1>
         <p className="mt-1 text-sm text-gray-500">
-          {work.title} の編集
+          作品情報とライセンス設定を編集できます。
         </p>
       </div>
 

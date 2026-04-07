@@ -4,7 +4,7 @@ import { getDashboardWorksByUserSlug, getArtistProfileByUserSlug } from "@/lib/q
 export async function GET(req: NextRequest) {
   const userSlug = req.nextUrl.searchParams.get("userSlug");
   if (!userSlug) {
-    return NextResponse.json({ error: "userSlug required" }, { status: 400 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const [works, profile] = await Promise.all([
