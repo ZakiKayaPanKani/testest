@@ -8,7 +8,7 @@ export async function GET(
   const { id } = await params;
   const userSlug = req.nextUrl.searchParams.get("userSlug");
   if (!userSlug) {
-    return NextResponse.json({ error: "userSlug required" }, { status: 400 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const work = await getWorkForEdit(id, userSlug);
@@ -28,8 +28,12 @@ export async function PUT(
     const body = await req.json();
     const { userSlug, title, description, coverImageUrl, tags, status, license } = body;
 
-    if (!userSlug || !title) {
-      return NextResponse.json({ error: "userSlug and title are required" }, { status: 400 });
+    if (!userSlug) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    if (!title) {
+      return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
 
     if (!license || !license.commercial || !license.adult || !license.trainingType || !license.redistribution || license.priceJpy === undefined) {
@@ -54,6 +58,9 @@ export async function PUT(
     return NextResponse.json(result);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
+    if (message.includes("not found") || message.includes("not owned")) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }

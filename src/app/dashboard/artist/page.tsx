@@ -14,6 +14,7 @@ interface DashboardWork {
   likes: number;
   acquisitions: number;
   createdAt: string;
+  updatedAt: string;
   licenseTerms: {
     commercial: string;
     adult: string;
