@@ -444,18 +444,208 @@ export async function getAcquisitionsByUserSlug(userSlug: string) {
 
   if (!user?.developerProfile) return [];
 
-  return user.developerProfile.acquisitions.map((a) => ({
-    id: a.id,
-    workId: a.work.slug,
-    workTitle: a.work.title,
-    workImageUrl: a.work.coverImageUrl,
-    artistName: a.work.artistProfile.displayName,
-    artistId: a.work.artistProfile.slug,
-    acquiredAt: a.acquiredAt.toISOString().slice(0, 10),
-    licenseSummary: formatLicenseSummary(a.licenseSnapshot),
-    commercialAllowed: isCommercialAllowed(a.licenseSnapshot),
-    priceJpy: a.priceJpy,
-  }));
+  return user.developerProfile.acquisitions.map((a) => {
+    const ls = (typeof a.licenseSnapshot === "string"
+      ? JSON.parse(a.licenseSnapshot)
+      : a.licenseSnapshot) as {
+      commercial?: string;
+      adult?: string;
+      trainingType?: string;
+      redistribution?: string;
+    };
+    return {
+      id: a.id,
+      workId: a.work.slug,
+      workTitle: a.work.title,
+      workImageUrl: a.work.coverImageUrl,
+      artistName: a.work.artistProfile.displayName,
+      artistId: a.work.artistProfile.slug,
+      acquiredAt: a.acquiredAt.toISOString().slice(0, 10),
+      licenseSummary: formatLicenseSummary(a.licenseSnapshot),
+      commercialAllowed: isCommercialAllowed(a.licenseSnapshot),
+      priceJpy: a.priceJpy,
+      commercial: ls.commercial ?? "",
+      adult: ls.adult ?? "",
+      trainingType: ls.trainingType ?? "",
+      redistribution: ls.redistribution ?? "",
+    };
+  });
+}
+
+// ─── Acquisition Mutations & Queries ───────────────────────────────────────
+
+export async function acquireWork(
+  userSlug: string,
+  workSlug: string,
+): Promise<
+  | { success: true; acquisitionId: string }
+  | { success: false; error: string }
+> {
+  const user = await prisma.user.findUnique({
+    where: { slug: userSlug },
+    include: { developerProfile: true },
+  });
+  if (!user?.developerProfile) {
+    return { success: false, error: "NOT_DEVELOPER" };
+  }
+
+  const work = await prisma.work.findFirst({
+    where: { slug: workSlug },
+    include: {
+      license: true,
+      artistProfile: { select: { slug: true, displayName: true } },
+    },
+  });
+  if (!work) {
+    return { success: false, error: "WORK_NOT_FOUND" };
+  }
+  if (work.status !== "public") {
+    return { success: false, error: "NOT_PUBLIC" };
+  }
+  if (!work.license) {
+    return { success: false, error: "NO_LICENSE" };
+  }
+  if (
+    work.license.commercial === "consult" ||
+    work.license.adult === "consult" ||
+    work.license.redistribution === "consult"
+  ) {
+    return { success: false, error: "CONSULT_REQUIRED" };
+  }
+
+  const existing = await prisma.acquisition.findUnique({
+    where: {
+      developerProfileId_workId: {
+        developerProfileId: user.developerProfile.id,
+        workId: work.id,
+      },
+    },
+  });
+  if (existing) {
+    return { success: false, error: "ALREADY_ACQUIRED" };
+  }
+
+  const workSnapshot = {
+    title: work.title,
+    workSlug: work.slug,
+    artistSlug: work.artistProfile.slug,
+    artistDisplayName: work.artistProfile.displayName,
+    coverImageUrl: work.coverImageUrl,
+  };
+  const licenseSnapshot = {
+    commercial: work.license.commercial,
+    adult: work.license.adult,
+    trainingType: work.license.trainingType,
+    redistribution: work.license.redistribution,
+  };
+
+  const acquisition = await prisma.acquisition.create({
+    data: {
+      developerProfileId: user.developerProfile.id,
+      workId: work.id,
+      priceJpy: work.license.priceJpy,
+      licenseSnapshot,
+      workSnapshot,
+      acquiredAt: new Date(),
+    },
+  });
+
+  return { success: true, acquisitionId: acquisition.id };
+}
+
+export async function getAcquisitionStatus(
+  userSlug: string,
+  workSlug: string,
+): Promise<{
+  isDeveloper: boolean;
+  canAcquire: boolean;
+  alreadyAcquired: boolean;
+  reason?: string;
+}> {
+  const user = await prisma.user.findUnique({
+    where: { slug: userSlug },
+    include: { developerProfile: true },
+  });
+  if (!user?.developerProfile) {
+    return { isDeveloper: false, canAcquire: false, alreadyAcquired: false };
+  }
+
+  const work = await prisma.work.findFirst({
+    where: { slug: workSlug },
+    include: { license: true },
+  });
+  if (!work) {
+    return {
+      isDeveloper: true,
+      canAcquire: false,
+      alreadyAcquired: false,
+      reason: "WORK_NOT_FOUND",
+    };
+  }
+  if (work.status !== "public") {
+    return {
+      isDeveloper: true,
+      canAcquire: false,
+      alreadyAcquired: false,
+      reason: "NOT_PUBLIC",
+    };
+  }
+  if (!work.license) {
+    return {
+      isDeveloper: true,
+      canAcquire: false,
+      alreadyAcquired: false,
+      reason: "NO_LICENSE",
+    };
+  }
+  if (
+    work.license.commercial === "consult" ||
+    work.license.adult === "consult" ||
+    work.license.redistribution === "consult"
+  ) {
+    return {
+      isDeveloper: true,
+      canAcquire: false,
+      alreadyAcquired: false,
+      reason: "CONSULT_REQUIRED",
+    };
+  }
+
+  const existing = await prisma.acquisition.findUnique({
+    where: {
+      developerProfileId_workId: {
+        developerProfileId: user.developerProfile.id,
+        workId: work.id,
+      },
+    },
+  });
+  if (existing) {
+    return { isDeveloper: true, canAcquire: false, alreadyAcquired: true };
+  }
+
+  return { isDeveloper: true, canAcquire: true, alreadyAcquired: false };
+}
+
+export async function getAcquisitionById(acquisitionId: string) {
+  const acq = await prisma.acquisition.findUnique({
+    where: { id: acquisitionId },
+    include: {
+      work: {
+        include: {
+          artistProfile: { select: { slug: true, displayName: true } },
+        },
+      },
+    },
+  });
+  if (!acq) return null;
+  return {
+    id: acq.id,
+    priceJpy: acq.priceJpy,
+    licenseSnapshot: acq.licenseSnapshot,
+    workSnapshot: acq.workSnapshot,
+    acquiredAt: acq.acquiredAt.toISOString(),
+    createdAt: acq.createdAt.toISOString(),
+  };
 }
 
 export async function getDeveloperProfileByUserSlug(userSlug: string) {

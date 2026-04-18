@@ -17,6 +17,10 @@ interface AcquisitionItem {
   licenseSummary: string;
   commercialAllowed: boolean;
   priceJpy: number;
+  commercial: string;
+  adult: string;
+  trainingType: string;
+  redistribution: string;
 }
 
 interface DeveloperDashboardProfile {
@@ -170,7 +174,9 @@ export default function DeveloperDashboardPage() {
                   View Work
                 </Link>
                 <button
-                  onClick={() => alert("Download — プロトタイプでは利用不可")}
+                  onClick={() => {
+                    window.open(`/api/acquisitions/${acq.id}/download`, "_blank");
+                  }}
                   className="flex-1 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg py-1.5 hover:bg-gray-50 transition-colors"
                 >
                   Download
