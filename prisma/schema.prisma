@@ -95,8 +95,11 @@ model Acquisition {
   work               Work     @relation(fields: [workId], references: [id])
   priceJpy           Int
   licenseSnapshot    Json     // { commercial, adult, trainingType, redistribution }
+  workSnapshot       Json     @default("{}") // { title, workSlug, artistSlug, artistDisplayName, coverImageUrl }
   acquiredAt         DateTime
   createdAt          DateTime @default(now())
+
+  @@unique([developerProfileId, workId])
 }
 
 model Tag {

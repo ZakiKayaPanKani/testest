@@ -713,6 +713,21 @@ async function main() {
     };
   }
 
+  async function getWorkSnapshot(workId: string) {
+    const work = await prisma.work.findUnique({
+      where: { id: workId },
+      include: { artistProfile: { select: { slug: true, displayName: true } } },
+    });
+    if (!work) return {};
+    return {
+      title: work.title,
+      workSlug: work.slug,
+      artistSlug: work.artistProfile.slug,
+      artistDisplayName: work.artistProfile.displayName,
+      coverImageUrl: work.coverImageUrl,
+    };
+  }
+
   // user-3 (Dev Studio) acquisitions: acq-1 to acq-4
   await prisma.acquisition.create({
     data: {
@@ -720,6 +735,7 @@ async function main() {
       workId: art3.id,
       priceJpy: 5000,
       licenseSnapshot: await getLicenseSnapshot(art3.id),
+      workSnapshot: await getWorkSnapshot(art3.id),
       acquiredAt: new Date("2025-11-15"),
     },
   });
@@ -729,6 +745,7 @@ async function main() {
       workId: art5.id,
       priceJpy: 2000,
       licenseSnapshot: await getLicenseSnapshot(art5.id),
+      workSnapshot: await getWorkSnapshot(art5.id),
       acquiredAt: new Date("2025-11-20"),
     },
   });
@@ -738,6 +755,7 @@ async function main() {
       workId: art7.id,
       priceJpy: 3500,
       licenseSnapshot: await getLicenseSnapshot(art7.id),
+      workSnapshot: await getWorkSnapshot(art7.id),
       acquiredAt: new Date("2025-12-01"),
     },
   });
@@ -747,6 +765,7 @@ async function main() {
       workId: art9.id,
       priceJpy: 2800,
       licenseSnapshot: await getLicenseSnapshot(art9.id),
+      workSnapshot: await getWorkSnapshot(art9.id),
       acquiredAt: new Date("2025-12-10"),
     },
   });
@@ -758,6 +777,7 @@ async function main() {
       workId: art4.id,
       priceJpy: 4500,
       licenseSnapshot: await getLicenseSnapshot(art4.id),
+      workSnapshot: await getWorkSnapshot(art4.id),
       acquiredAt: new Date("2025-10-05"),
     },
   });
@@ -767,6 +787,7 @@ async function main() {
       workId: art6.id,
       priceJpy: 1800,
       licenseSnapshot: await getLicenseSnapshot(art6.id),
+      workSnapshot: await getWorkSnapshot(art6.id),
       acquiredAt: new Date("2025-10-20"),
     },
   });
@@ -776,6 +797,7 @@ async function main() {
       workId: art11.id,
       priceJpy: 6000,
       licenseSnapshot: await getLicenseSnapshot(art11.id),
+      workSnapshot: await getWorkSnapshot(art11.id),
       acquiredAt: new Date("2025-11-10"),
     },
   });
@@ -785,6 +807,7 @@ async function main() {
       workId: art1.id,
       priceJpy: 3000,
       licenseSnapshot: await getLicenseSnapshot(art1.id),
+      workSnapshot: await getWorkSnapshot(art1.id),
       acquiredAt: new Date("2025-12-05"),
     },
   });
@@ -794,6 +817,7 @@ async function main() {
       workId: art8.id,
       priceJpy: 4000,
       licenseSnapshot: await getLicenseSnapshot(art8.id),
+      workSnapshot: await getWorkSnapshot(art8.id),
       acquiredAt: new Date("2025-12-15"),
     },
   });
