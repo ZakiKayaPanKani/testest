@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import type {
   WorkForCard,
   ArtistForCard,
@@ -513,18 +514,6 @@ export async function acquireWork(
     return { success: false, error: "CONSULT_REQUIRED" };
   }
 
-  const existing = await prisma.acquisition.findUnique({
-    where: {
-      developerProfileId_workId: {
-        developerProfileId: user.developerProfile.id,
-        workId: work.id,
-      },
-    },
-  });
-  if (existing) {
-    return { success: false, error: "ALREADY_ACQUIRED" };
-  }
-
   const workSnapshot = {
     title: work.title,
     workSlug: work.slug,
@@ -539,18 +528,27 @@ export async function acquireWork(
     redistribution: work.license.redistribution,
   };
 
-  const acquisition = await prisma.acquisition.create({
-    data: {
-      developerProfileId: user.developerProfile.id,
-      workId: work.id,
-      priceJpy: work.license.priceJpy,
-      licenseSnapshot,
-      workSnapshot,
-      acquiredAt: new Date(),
-    },
-  });
-
-  return { success: true, acquisitionId: acquisition.id };
+  try {
+    const acquisition = await prisma.acquisition.create({
+      data: {
+        developerProfileId: user.developerProfile.id,
+        workId: work.id,
+        priceJpy: work.license.priceJpy,
+        licenseSnapshot,
+        workSnapshot,
+        acquiredAt: new Date(),
+      },
+    });
+    return { success: true, acquisitionId: acquisition.id };
+  } catch (e) {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === "P2002"
+    ) {
+      return { success: false, error: "ALREADY_ACQUIRED" };
+    }
+    throw e;
+  }
 }
 
 export async function getAcquisitionStatus(
