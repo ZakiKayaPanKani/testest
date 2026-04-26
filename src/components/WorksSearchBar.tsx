@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { WorksSearchFilters } from "@/lib/queries";
 
 const trainingTypes = [
@@ -17,7 +17,12 @@ interface WorksSearchBarProps {
 export default function WorksSearchBar({ filters }: WorksSearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(filters.q ?? "");
+  const qParam = searchParams.get("q") ?? "";
+  const [query, setQuery] = useState(qParam);
+
+  useEffect(() => {
+    setQuery(searchParams.get("q") ?? "");
+  }, [searchParams]);
 
   const pushFilters = useCallback(
     (overrides: Partial<WorksSearchFilters>) => {
