@@ -98,6 +98,79 @@ const workInclude = {
   tags: { select: { name: true } },
 } as const;
 
+// ─── Search / Filter ────────────────────────────────────────────────────────
+
+export interface WorksSearchFilters {
+  q?: string;
+  trainingType?: string;
+  adult?: string;
+  commercial?: string;
+  consult?: string;
+}
+
+export async function searchPublicWorks(
+  filters: WorksSearchFilters,
+): Promise<{ works: WorkForCard[]; total: number }> {
+  const where: Prisma.WorkWhereInput = { status: "public" };
+  const andConditions: Prisma.WorkWhereInput[] = [];
+
+  if (filters.q && filters.q.trim()) {
+    const q = filters.q.trim();
+    andConditions.push({
+      OR: [
+        { title: { contains: q, mode: "insensitive" } },
+        { tags: { some: { name: { contains: q, mode: "insensitive" } } } },
+        {
+          artistProfile: {
+            displayName: { contains: q, mode: "insensitive" },
+          },
+        },
+      ],
+    });
+  }
+
+  if (
+    filters.trainingType &&
+    ["light", "standard", "strong"].includes(filters.trainingType)
+  ) {
+    andConditions.push({
+      license: { trainingType: filters.trainingType },
+    });
+  }
+
+  if (filters.adult === "allowed") {
+    andConditions.push({ license: { adult: "allowed" } });
+  }
+
+  if (filters.commercial === "allowed") {
+    andConditions.push({ license: { commercial: "allowed" } });
+  }
+
+  if (filters.consult === "exclude") {
+    andConditions.push({
+      NOT: {
+        OR: [
+          { license: { commercial: "consult" } },
+          { license: { adult: "consult" } },
+          { license: { redistribution: "consult" } },
+        ],
+      },
+    });
+  }
+
+  if (andConditions.length > 0) {
+    where.AND = andConditions;
+  }
+
+  const works = await prisma.work.findMany({
+    where,
+    include: workInclude,
+    orderBy: { createdAt: "desc" },
+  });
+
+  return { works: works.map(toWorkForCard), total: works.length };
+}
+
 // ─── Public Queries ─────────────────────────────────────────────────────────
 
 export async function getPublicWorks(): Promise<WorkForCard[]> {
