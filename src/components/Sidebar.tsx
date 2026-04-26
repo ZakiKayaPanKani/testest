@@ -106,13 +106,13 @@ function SidebarContent({ data }: { data: SidebarData }) {
             成人OK
           </Link>
           <Link
-            href="/works?training=light"
+            href="/works?trainingType=light"
             className="px-2.5 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded-full border border-blue-200 hover:bg-blue-100 transition-colors"
           >
             学習 Light
           </Link>
           <Link
-            href="/works?training=standard"
+            href="/works?trainingType=standard"
             className="px-2.5 py-1 text-xs font-medium bg-orange-50 text-orange-700 rounded-full border border-orange-200 hover:bg-orange-100 transition-colors"
           >
             学習 Standard

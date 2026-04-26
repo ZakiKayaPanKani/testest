@@ -40,15 +40,23 @@ export default function ArtworkCard({ artwork }: ArtworkCardProps) {
           size="sm"
         />
 
-        {/* License chip + Like count */}
+        {/* License chip + Training type + Like count */}
         <div className="flex items-center justify-between">
-          <Link
-            href={`/works/${artwork.slug}#license`}
-            className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-500 rounded-full hover:bg-gray-200 transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            License
-          </Link>
+          <div className="flex items-center gap-1.5">
+            <Link
+              href={`/works/${artwork.slug}#license`}
+              className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-500 rounded-full hover:bg-gray-200 transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
+              License
+            </Link>
+            {artwork.license?.trainingType && (
+              <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium bg-blue-50 text-blue-600 rounded-full">
+                {artwork.license.trainingType.charAt(0).toUpperCase() +
+                  artwork.license.trainingType.slice(1)}
+              </span>
+            )}
+          </div>
           <span className="text-xs text-gray-400 flex items-center gap-1">
             {"\u2661"} {artwork.likesCount}
           </span>
