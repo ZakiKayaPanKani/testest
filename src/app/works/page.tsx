@@ -47,8 +47,12 @@ export default async function WorksPage({ searchParams }: WorksPageProps) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex gap-8" data-page="works">
       <Sidebar className="hidden lg:block flex-shrink-0" data={sidebarData} />
       <div className="flex-1 min-w-0">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Works</h1>
-        <p className="text-sm text-gray-500 mb-6">Browse works. Licensing details are available per work.</p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">
+          3つの『アイ』を伝える、新世代イラストSNS
+        </h2>
+        <p className="text-sm text-gray-500 mb-6">
+          作品を公開しながら、AI学習への利用条件を設定・管理できるプラットフォーム
+        </p>
         <WorksSearchBar filters={filters} />
         <WorksResultInfo total={total} filters={filters} hasActiveFilters={hasActiveFilters} />
         <WorksGrid works={works} />
