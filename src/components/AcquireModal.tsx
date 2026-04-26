@@ -39,6 +39,7 @@ export default function AcquireModal({ license, acquiring, onConfirm, onCancel }
             <div>・成人向け利用：{licenseValueText(license.adult)}</div>
             <div>・AI学習利用：{trainingTypeText(license.trainingType)}</div>
             <div>・再配布：{licenseValueText(license.redistribution)}</div>
+            <div className="pt-2 border-t border-gray-200 font-semibold">価格：&yen;{license.priceJpy.toLocaleString()}</div>
           </div>
 
           <div className="text-xs text-gray-500 space-y-1">
