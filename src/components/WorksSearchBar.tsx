@@ -21,8 +21,8 @@ export default function WorksSearchBar({ filters }: WorksSearchBarProps) {
   const [query, setQuery] = useState(qParam);
 
   useEffect(() => {
-    setQuery(searchParams.get("q") ?? "");
-  }, [searchParams]);
+    setQuery(qParam);
+  }, [qParam]);
 
   const pushFilters = useCallback(
     (overrides: Partial<WorksSearchFilters>) => {
