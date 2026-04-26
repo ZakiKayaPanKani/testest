@@ -38,7 +38,7 @@ Requires `.env` or `.env.local` file with `DATABASE_URL` and `DIRECT_DATABASE_UR
 
 ### Public Pages
 - `/` - Home page with SNS-style hero and Featured Works/Artists
-- `/works` - Works listing with sidebar (desktop), collapsible License filters, 5-column grid
+- `/works` - Works listing with server-side search & filter, sidebar (desktop), 5-column grid
 - `/artists` - Artists listing with sidebar
 - `/works/{slug}` - Work detail with Overview/License tabs (e.g. `/works/art-1`)
 - `/works/{slug}#license` - Direct link to License tab via URL hash
@@ -69,6 +69,48 @@ Requires `.env` or `.env.local` file with `DATABASE_URL` and `DIRECT_DATABASE_UR
 - Click "Log In" button
 - Header shows avatar initial (e.g. "Y") when logged in
 
+### /works Search & Filter Testing
+The `/works` page supports server-side search and filtering via URL query parameters.
+
+**URL Parameters:**
+- `q` — text search (matches title, tags, artist displayName via case-insensitive OR)
+- `trainingType` — `light` | `standard` | `strong`
+- `adult` — `allowed`
+- `commercial` — `allowed`
+- `consult` — `exclude` (excludes works where commercial, adult, or redistribution = "consult")
+
+**UI Components:**
+- `WorksSearchBar` (client) — search input + filter chips. Search submits on Enter/button click. Chips update URL immediately via `router.push()`.
+- `WorksResultInfo` (server) — shows "N works" + active filter chips + "すべてクリア" link
+- `WorksGrid` — card grid or zero-result message
+
+**Testing approach:**
+- Navigate directly via URL for faster testing (e.g. `google-chrome "https://testest-gilt.vercel.app/works?trainingType=strong"`)
+- Verify result count in the "N works" info bar
+- Verify filter chips are highlighted (active state uses colored backgrounds)
+- Verify URL contains expected query parameters
+- For zero results, verify Japanese message: "条件に合う作品が見つかりませんでした。"
+
+**Seed data reference for assertions (16 public works):**
+
+| trainingType | Count | Works |
+|-------------|-------|-------|
+| light | 9 | art-1, art-2, art-5, art-6, art-8, art-11, art-12, art-15, art-16 |
+| standard | 5 | art-3, art-4, art-7, art-18, art-21 |
+| strong | 2 | art-9, art-10 |
+
+| Filter | Count | Notes |
+|--------|-------|-------|
+| commercial=allowed | 9 | art-3,4,5,6,9,10,15,18,21 |
+| adult=allowed | 3 | art-8,9,10 |
+| consult=exclude | 11 | Excludes art-1,2,7,8,16 (have consult in commercial/adult/redistribution) |
+
+**Artist name search examples:**
+- "Mio" → 2 works (art-5, art-6 by Mio Hayashi)
+- "Sakura" → 5 works by Sakura Ito (art-9,10,18,21 + check if art-19/20 are public)
+
+**Minor UI note:** After clicking "すべてクリア" (full page navigation), the client-side search input may retain previous text until user interacts. The URL and server response are correct.
+
 ### Dashboard Testing
 - After login, navigate to `/dashboard/artist`
 - Summary cards show counts computed from API response
@@ -98,10 +140,10 @@ Requires `.env` or `.env.local` file with `DATABASE_URL` and `DIRECT_DATABASE_UR
 ### Desktop View
 - Sidebar should be visible on `/works` and `/artists` pages (left side, w-64)
 - Sidebar contains: Trending Tags, Featured Artists, New Works, License Quick Filters
-- ArtworkCard shows: portrait thumbnail (aspect-[3/4]), title, AuthorBadge (artist icon + name), License chip, heart + like count
+- Sidebar License Quick Filters use `trainingType=` parameter (not `training=`)
+- ArtworkCard shows: portrait thumbnail (aspect-[3/4]), title, AuthorBadge (artist icon + name), License chip, trainingType badge, heart + like count
 - ArtworkCard does NOT show price - price is only on the License tab of work detail
 - Grid density: grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5, gap-4
-- License filters section is collapsible (collapsed by default), toggled by "License filters" button
 
 ### Work Detail Page
 - Overview tab (default): AuthorBadge, description, tags, WorkActions (Like/Share/Comments), "ライセンス詳細を確認 →" link
@@ -142,10 +184,10 @@ npm run lint         # Should show no warnings or errors
 
 ## Known Issues
 - Nested `<a>` tags: ArtworkCard has multiple Link elements (thumbnail+title, AuthorBadge, License chip) which may trigger Next.js dev overlay warnings about nested anchors. This is a known prototype pattern.
-- Sidebar filter links (e.g. `/works?commercial=allowed`) navigate but don't actually apply filters since WorksFilter uses local useState.
 - Occasional `SyntaxError: Unexpected end of JSON input` on `/works` page during dev — transient, page works on reload.
 
 ## Devin Secrets Needed
 - `DATABASE_URL` - Neon PostgreSQL connection string (pooled, with `-pooler` suffix)
 - `DIRECT_DATABASE_URL` - Neon PostgreSQL direct connection string (non-pooled, for migrations)
 - `VERCEL_TOKEN` - For Vercel deployment operations (optional, only needed for deploy commands)
+- `VERCEL_AUTOMATION_BYPASS_SECRET` - For bypassing Vercel deployment protection during testing (optional)
