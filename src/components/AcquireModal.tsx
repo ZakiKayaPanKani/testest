@@ -30,6 +30,7 @@ export default function AcquireModal({ license, acquiring, onConfirm, onCancel }
         <div className="text-sm text-gray-700 space-y-3">
           <p>この操作により、以下の条件でこの作品を利用できます。</p>
           <div className="bg-gray-50 rounded-lg p-4 space-y-2 border border-gray-200">
+            <div className="font-medium text-gray-900">&yen;{license.priceJpy.toLocaleString()}</div>
             <div>・商用利用：{licenseValueText(license.commercial)}</div>
             <div>・成人向け利用：{licenseValueText(license.adult)}</div>
             <div>・AI学習利用：{trainingTypeText(license.trainingType)}</div>
