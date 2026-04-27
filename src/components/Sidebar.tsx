@@ -89,8 +89,8 @@ function SidebarContent({ data }: { data: SidebarData }) {
 
       {/* License Quick Filters */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-3">
-          License Quick Filters
+        <h3 className="text-xs font-semibold text-gray-900 tracking-wider mb-3">
+          利用条件で探す
         </h3>
         <div className="flex flex-wrap gap-1.5">
           <Link

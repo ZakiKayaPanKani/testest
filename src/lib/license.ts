@@ -14,10 +14,10 @@ export function licenseValueText(value: LicenseValue): string {
 export function trainingTypeText(type: TrainingType): string {
   switch (type) {
     case "light":
-      return "Light — 軽量学習のみ許可";
+      return "軽度のAI学習利用";
     case "standard":
-      return "Standard — 標準的な学習利用可";
+      return "標準的なAI学習利用";
     case "strong":
-      return "Strong — 大規模学習も許可";
+      return "広範なAI学習利用";
   }
 }

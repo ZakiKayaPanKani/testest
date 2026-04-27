@@ -8,6 +8,20 @@ import AuthorBadge from "./AuthorBadge";
 import LicenseBadges from "./LicenseBadges";
 import TagPills from "./TagPills";
 import WorkActions from "./WorkActions";
+import AcquireModal from "./AcquireModal";
+
+function InfoTooltip({ text }: { text: string }) {
+  return (
+    <span className="ml-1 inline-flex items-center cursor-help group relative">
+      <svg className="w-3.5 h-3.5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+      </svg>
+      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-xs text-white bg-gray-800 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+        {text}
+      </span>
+    </span>
+  );
+}
 
 interface WorkDetailTabsProps {
   artwork: WorkForCard;
@@ -31,6 +45,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
     reason?: string;
   } | null>(null);
   const [acquiring, setAcquiring] = useState(false);
+  const [showAcquireModal, setShowAcquireModal] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -55,6 +70,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
         body: JSON.stringify({ userSlug: user.id }),
       });
       if (res.ok) {
+        setShowAcquireModal(false);
         setAcquireStatus((prev) =>
           prev ? { ...prev, canAcquire: false, alreadyAcquired: true } : prev,
         );
@@ -107,15 +123,15 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
 
           <p className="text-gray-600 leading-relaxed">{artwork.description}</p>
 
-          <TagPills tags={artwork.tags.map((t) => t.name)} />
-
           <WorkActions likes={artwork.likesCount} comments={artwork.commentsCount} />
+
+          <TagPills tags={artwork.tags.map((t) => t.name)} />
 
           <button
             onClick={() => setActiveTab("license")}
             className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
           >
-            ライセンス詳細を確認 &rarr;
+            この作品の利用条件を確認 &rarr;
           </button>
         </div>
       )}
@@ -126,29 +142,38 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
           <LicenseBadges terms={license} />
 
           <div className="bg-gray-50 rounded-xl p-5 space-y-4 border border-gray-200">
-            <h3 className="text-sm font-semibold text-gray-900">許諾条件</h3>
+            <h3 className="text-sm font-semibold text-gray-900">この作品の利用条件</h3>
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
-                <span className="text-gray-500">商用利用:</span>{" "}
-                <span className="font-medium">{licenseValueText(license.commercial)}</span>
+                <span className="text-gray-500">商用利用:<InfoTooltip text="商用目的での利用可否を示します" /></span>{" "}
+                <span className="font-medium">
+                  {licenseValueText(license.commercial)}
+                  {license.commercial === "consult" && <InfoTooltip text="作家との個別確認が必要な条件です" />}
+                </span>
               </div>
               <div>
-                <span className="text-gray-500">成人向け:</span>{" "}
-                <span className="font-medium">{licenseValueText(license.adult)}</span>
+                <span className="text-gray-500">成人向け利用:<InfoTooltip text="成人向けコンテンツでの利用可否を示します" /></span>{" "}
+                <span className="font-medium">
+                  {licenseValueText(license.adult)}
+                  {license.adult === "consult" && <InfoTooltip text="作家との個別確認が必要な条件です" />}
+                </span>
               </div>
               <div>
-                <span className="text-gray-500">学習タイプ:</span>{" "}
+                <span className="text-gray-500">AI学習利用:<InfoTooltip text="作家が許可するAI学習利用の範囲を示します" /></span>{" "}
                 <span className="font-medium">{trainingTypeText(license.trainingType)}</span>
               </div>
               <div>
-                <span className="text-gray-500">再配布:</span>{" "}
-                <span className="font-medium">{licenseValueText(license.redistribution)}</span>
+                <span className="text-gray-500">再配布:<InfoTooltip text="この作品を第三者に再配布できるかを示します" /></span>{" "}
+                <span className="font-medium">
+                  {licenseValueText(license.redistribution)}
+                  {license.redistribution === "consult" && <InfoTooltip text="作家との個別確認が必要な条件です" />}
+                </span>
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <p className="text-3xl font-bold text-gray-900">
+            <p className="text-lg font-medium text-gray-700">
               &yen;{license.priceJpy.toLocaleString()}
             </p>
 
@@ -188,14 +213,14 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
               !acquireStatus.alreadyAcquired && (
                 <div className="flex flex-col gap-1">
                   <button
-                    onClick={handleAcquire}
+                    onClick={() => setShowAcquireModal(true)}
                     disabled={acquiring}
                     className="px-6 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
                   >
-                    {acquiring ? "取得中..." : "Acquire license"}
+                    {acquiring ? "取得中..." : "この作品の利用権を取得する"}
                   </button>
-                  <p className="text-xs text-green-600">
-                    現在の条件で即時取得できます
+                  <p className="text-xs text-gray-500">
+                    取得後、条件に基づいてAI学習等に利用できます
                   </p>
                 </div>
               )}
@@ -226,6 +251,15 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
             Terms shown here describe allowed usage.
           </p>
         </div>
+      )}
+
+      {showAcquireModal && license && (
+        <AcquireModal
+          license={license}
+          acquiring={acquiring}
+          onConfirm={handleAcquire}
+          onCancel={() => setShowAcquireModal(false)}
+        />
       )}
     </div>
   );
