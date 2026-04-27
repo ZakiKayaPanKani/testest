@@ -82,6 +82,12 @@ export default function Header() {
                     <div className="px-4 py-3 border-b border-gray-100">
                       <p className="text-sm font-semibold text-gray-900">{user.displayName}</p>
                       <p className="text-xs text-gray-500 mt-0.5">{user.email}</p>
+                      <p className="text-xs text-indigo-600 mt-1">
+                        ロール：{user.isDeveloper && user.isArtist ? "Artist + Developer" : user.isDeveloper ? "Developer" : user.isArtist ? "Artist" : "Viewer"}
+                      </p>
+                      {user.isDeveloper && (
+                        <p className="text-xs text-gray-400">※ 作品の利用権を取得できます</p>
+                      )}
                     </div>
 
                     {/* Dashboard links */}

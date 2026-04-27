@@ -48,7 +48,11 @@ export default async function WorksPage({ searchParams }: WorksPageProps) {
       <Sidebar className="hidden lg:block flex-shrink-0" data={sidebarData} />
       <div className="flex-1 min-w-0">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Works</h1>
-        <p className="text-sm text-gray-500 mb-6">Browse works. Licensing details are available per work.</p>
+        <div className="text-sm text-gray-500 mb-6 space-y-0.5">
+          <p>・作品を閲覧できます</p>
+          <p>・利用条件を確認できます</p>
+          <p>・条件に同意して取得（Acquire）できます</p>
+        </div>
         <WorksSearchBar filters={filters} />
         <WorksResultInfo total={total} filters={filters} hasActiveFilters={hasActiveFilters} />
         <WorksGrid works={works} />
