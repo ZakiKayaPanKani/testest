@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import type { WorkForCard } from "@/lib/types";
 import AuthorBadge from "./AuthorBadge";
 
