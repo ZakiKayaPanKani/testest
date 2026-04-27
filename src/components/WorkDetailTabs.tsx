@@ -74,6 +74,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
         setAcquireStatus((prev) =>
           prev ? { ...prev, canAcquire: false, alreadyAcquired: true } : prev,
         );
+        setShowAcquireModal(false);
       } else {
         const data = await res.json();
         alert(`取得に失敗しました: ${data.error}`);
