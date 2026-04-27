@@ -40,25 +40,24 @@ export default function ArtworkCard({ artwork }: ArtworkCardProps) {
           size="sm"
         />
 
-        {/* License chip + Training type + Like count */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <Link
-              href={`/works/${artwork.slug}#license`}
-              className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-500 rounded-full hover:bg-gray-200 transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              License
-            </Link>
-            {artwork.license?.trainingType && (
-              <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium bg-blue-50 text-blue-600 rounded-full">
-                {artwork.license.trainingType.charAt(0).toUpperCase() +
-                  artwork.license.trainingType.slice(1)}
+        {/* Tags */}
+        {artwork.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {artwork.tags.slice(0, 3).map((t) => (
+              <span key={t.name} className="inline-flex items-center px-2 py-0.5 text-[10px] font-medium bg-gray-100 text-gray-600 rounded-full">
+                {t.name}
               </span>
+            ))}
+            {artwork.tags.length > 3 && (
+              <span className="text-[10px] text-gray-400">+{artwork.tags.length - 3}</span>
             )}
           </div>
+        )}
+
+        {/* Like count */}
+        <div className="flex justify-end">
           <span className="text-xs text-gray-400 flex items-center gap-1">
-            {"\u2661"} {artwork.likesCount}
+            ♡ {artwork.likesCount}
           </span>
         </div>
       </div>
