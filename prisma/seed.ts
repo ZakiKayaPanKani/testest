@@ -196,6 +196,7 @@ async function main() {
     "Abstract", "Generative", "Fractal", "Digital",
     "Entropy", "Waves",
     "Landscape", "Character Design", "Manga",
+    "風景", "キャラクター", "背景", "ファンタジー", "SF", "アニメ", "水彩", "ストリート", "抽象",
   ];
 
   const uniqueTagNames = [...new Set(allTagNames)];
@@ -235,7 +236,7 @@ async function main() {
           priceJpy: 3000,
         },
       },
-      tags: { connect: connectTags(["Fantasy", "Castle", "Sunrise", "Clouds"]) },
+      tags: { connect: connectTags(["Fantasy", "Castle", "Sunrise", "Clouds", "ファンタジー", "風景"]) },
     },
   });
 
@@ -258,7 +259,7 @@ async function main() {
           priceJpy: 2500,
         },
       },
-      tags: { connect: connectTags(["Fantasy", "Spirit", "Forest", "Mystical"]) },
+      tags: { connect: connectTags(["Fantasy", "Spirit", "Forest", "Mystical", "ファンタジー"]) },
     },
   });
 
@@ -281,7 +282,7 @@ async function main() {
           priceJpy: 5000,
         },
       },
-      tags: { connect: connectTags(["Sci-Fi", "Cyberpunk", "City", "Neon"]) },
+      tags: { connect: connectTags(["Sci-Fi", "Cyberpunk", "City", "Neon", "SF", "背景"]) },
     },
   });
 
@@ -304,7 +305,7 @@ async function main() {
           priceJpy: 4500,
         },
       },
-      tags: { connect: connectTags(["Mecha", "Robot", "Concept Art", "Military"]) },
+      tags: { connect: connectTags(["Mecha", "Robot", "Concept Art", "Military", "SF"]) },
     },
   });
 
@@ -327,7 +328,7 @@ async function main() {
           priceJpy: 2000,
         },
       },
-      tags: { connect: connectTags(["Watercolor", "Nature", "Spring", "Cherry Blossom"]) },
+      tags: { connect: connectTags(["Watercolor", "Nature", "Spring", "Cherry Blossom", "風景", "水彩"]) },
     },
   });
 
@@ -350,7 +351,7 @@ async function main() {
           priceJpy: 1800,
         },
       },
-      tags: { connect: connectTags(["Animals", "Deer", "Watercolor", "Cute"]) },
+      tags: { connect: connectTags(["Animals", "Deer", "Watercolor", "Cute", "キャラクター"]) },
     },
   });
 
@@ -373,7 +374,7 @@ async function main() {
           priceJpy: 3500,
         },
       },
-      tags: { connect: connectTags(["Street Art", "Graffiti", "Urban", "Bold"]) },
+      tags: { connect: connectTags(["Street Art", "Graffiti", "Urban", "Bold", "ストリート", "背景"]) },
     },
   });
 
@@ -396,7 +397,7 @@ async function main() {
           priceJpy: 4000,
         },
       },
-      tags: { connect: connectTags(["Pop Art", "Street Art", "Colorful", "Dynamic"]) },
+      tags: { connect: connectTags(["Pop Art", "Street Art", "Colorful", "Dynamic", "ストリート"]) },
     },
   });
 
@@ -419,7 +420,7 @@ async function main() {
           priceJpy: 2800,
         },
       },
-      tags: { connect: connectTags(["Anime", "Character", "Magical Girl", "Original"]) },
+      tags: { connect: connectTags(["Anime", "Character", "Magical Girl", "Original", "キャラクター", "アニメ"]) },
     },
   });
 
@@ -442,7 +443,7 @@ async function main() {
           priceJpy: 2200,
         },
       },
-      tags: { connect: connectTags(["Anime", "School", "Romance", "Sunset"]) },
+      tags: { connect: connectTags(["Anime", "School", "Romance", "Sunset", "アニメ"]) },
     },
   });
 
@@ -465,7 +466,7 @@ async function main() {
           priceJpy: 6000,
         },
       },
-      tags: { connect: connectTags(["Abstract", "Generative", "Fractal", "Digital"]) },
+      tags: { connect: connectTags(["Abstract", "Generative", "Fractal", "Digital", "抽象"]) },
     },
   });
 
@@ -488,7 +489,7 @@ async function main() {
           priceJpy: 5500,
         },
       },
-      tags: { connect: connectTags(["Abstract", "Generative", "Entropy", "Waves"]) },
+      tags: { connect: connectTags(["Abstract", "Generative", "Entropy", "Waves", "抽象"]) },
     },
   });
 
@@ -512,7 +513,7 @@ async function main() {
           priceJpy: 3000,
         },
       },
-      tags: { connect: connectTags(["Fantasy", "Landscape"]) },
+      tags: { connect: connectTags(["Fantasy", "Landscape", "ファンタジー", "風景"]) },
     },
   });
 
@@ -535,7 +536,7 @@ async function main() {
           priceJpy: 3500,
         },
       },
-      tags: { connect: connectTags(["Fantasy", "City"]) },
+      tags: { connect: connectTags(["Fantasy", "City", "ファンタジー", "背景"]) },
     },
   });
 
@@ -558,7 +559,7 @@ async function main() {
           priceJpy: 2500,
         },
       },
-      tags: { connect: connectTags(["Nature", "Landscape"]) },
+      tags: { connect: connectTags(["Nature", "Landscape", "風景"]) },
     },
   });
 
@@ -581,7 +582,7 @@ async function main() {
           priceJpy: 4000,
         },
       },
-      tags: { connect: connectTags(["Fantasy", "Character"]) },
+      tags: { connect: connectTags(["Fantasy", "Character", "ファンタジー", "キャラクター"]) },
     },
   });
 
@@ -604,7 +605,7 @@ async function main() {
           priceJpy: 3000,
         },
       },
-      tags: { connect: connectTags(["Fantasy"]) },
+      tags: { connect: connectTags(["Fantasy", "ファンタジー"]) },
     },
   });
 
@@ -627,7 +628,7 @@ async function main() {
           priceJpy: 2500,
         },
       },
-      tags: { connect: connectTags(["Anime", "Original"]) },
+      tags: { connect: connectTags(["Anime", "Original", "アニメ"]) },
     },
   });
 
@@ -650,7 +651,7 @@ async function main() {
           priceJpy: 3000,
         },
       },
-      tags: { connect: connectTags(["Anime", "Character Design"]) },
+      tags: { connect: connectTags(["Anime", "Character Design", "アニメ", "キャラクター"]) },
     },
   });
 
@@ -673,7 +674,7 @@ async function main() {
           priceJpy: 2000,
         },
       },
-      tags: { connect: connectTags(["Anime", "Landscape"]) },
+      tags: { connect: connectTags(["Anime", "Landscape", "アニメ", "風景"]) },
     },
   });
 
@@ -696,7 +697,7 @@ async function main() {
           priceJpy: 2200,
         },
       },
-      tags: { connect: connectTags(["Anime", "Cherry Blossom", "Nature"]) },
+      tags: { connect: connectTags(["Anime", "Cherry Blossom", "Nature", "アニメ", "風景"]) },
     },
   });
 

@@ -21,8 +21,6 @@ export default async function HomePage() {
             {BRAND.name}
           </h1>
           <p className="mt-4 text-lg sm:text-xl text-indigo-100 max-w-2xl mx-auto">
-            アーティストの作品を探索し、お気に入りを見つけよう。
-            <br className="hidden sm:block" />
             {BRAND.taglineJa}
           </p>
           <div className="mt-8 flex items-center justify-center gap-4">
@@ -30,13 +28,13 @@ export default async function HomePage() {
               href="/works"
               className="inline-flex items-center px-6 py-3 rounded-lg bg-white text-indigo-600 font-semibold shadow-lg hover:bg-indigo-50 transition-colors"
             >
-              Browse Works
+              作品を見る
             </Link>
             <Link
               href="/artists"
               className="inline-flex items-center px-6 py-3 rounded-lg bg-white/10 text-white font-semibold border border-white/30 hover:bg-white/20 transition-colors"
             >
-              Browse Artists
+              作家を見る
             </Link>
           </div>
         </div>
@@ -99,13 +97,13 @@ export default async function HomePage() {
             href="/works"
             className="inline-flex items-center px-6 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors"
           >
-            Browse Works
+            作品を見る
           </Link>
           <Link
             href="/artists"
             className="inline-flex items-center px-6 py-3 rounded-lg border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
           >
-            Browse Artists
+            作家を見る
           </Link>
         </div>
       </section>
