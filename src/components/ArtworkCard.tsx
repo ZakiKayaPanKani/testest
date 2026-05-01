@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { WorkForCard } from "@/lib/types";
 import AuthorBadge from "./AuthorBadge";
+import DeveloperOnly from "./DeveloperOnly";
+import LicenseBadges from "./LicenseBadges";
 
 interface ArtworkCardProps {
   artwork: WorkForCard;
@@ -52,6 +54,13 @@ export default function ArtworkCard({ artwork }: ArtworkCardProps) {
               <span className="text-[10px] text-gray-400">+{artwork.tags.length - 3}</span>
             )}
           </div>
+        )}
+
+        {/* License badges - Developer限定 */}
+        {artwork.license && (
+          <DeveloperOnly>
+            <LicenseBadges terms={artwork.license} mini />
+          </DeveloperOnly>
         )}
 
         {/* Like count */}
