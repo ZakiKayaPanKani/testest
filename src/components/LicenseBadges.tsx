@@ -47,24 +47,31 @@ function trainingLabel(type: TrainingType): string {
 interface LicenseBadgesProps {
   terms: LicenseTerms;
   compact?: boolean;
+  /** カード内表示用の極小サイズ */
+  mini?: boolean;
 }
 
-export default function LicenseBadges({ terms, compact = false }: LicenseBadgesProps) {
+export default function LicenseBadges({ terms, compact = false, mini = false }: LicenseBadgesProps) {
   const badgeBase = "inline-flex items-center border rounded-full font-medium";
-  const size = compact ? "px-2 py-0.5 text-xs" : "px-2.5 py-1 text-xs";
+  const sizeClass = mini
+    ? "px-1.5 py-0 text-[10px]"
+    : compact
+      ? "px-2 py-0.5 text-xs"
+      : "px-2.5 py-1 text-xs";
+  const gapClass = mini ? "gap-1" : "gap-1.5";
 
   return (
-    <div className="flex flex-wrap gap-1.5">
-      <span className={`${badgeBase} ${size} ${valueBadgeClass(terms.commercial)}`}>
+    <div className={`flex flex-wrap ${gapClass}`}>
+      <span className={`${badgeBase} ${sizeClass} ${valueBadgeClass(terms.commercial)}`}>
         商用 {valueLabel(terms.commercial)}
       </span>
-      <span className={`${badgeBase} ${size} ${valueBadgeClass(terms.adult)}`}>
+      <span className={`${badgeBase} ${sizeClass} ${valueBadgeClass(terms.adult)}`}>
         成人 {valueLabel(terms.adult)}
       </span>
-      <span className={`${badgeBase} ${size} ${trainingBadgeClass(terms.trainingType)}`}>
+      <span className={`${badgeBase} ${sizeClass} ${trainingBadgeClass(terms.trainingType)}`}>
         学習 {trainingLabel(terms.trainingType)}
       </span>
-      <span className={`${badgeBase} ${size} ${valueBadgeClass(terms.redistribution)}`}>
+      <span className={`${badgeBase} ${sizeClass} ${valueBadgeClass(terms.redistribution)}`}>
         再配布 {valueLabel(terms.redistribution)}
       </span>
     </div>
