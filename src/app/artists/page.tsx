@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAllArtists, getSidebarData } from "@/lib/queries";
 import ArtistsFilter from "@/components/ArtistsFilter";
+import ArtistsPageDescription from "@/components/ArtistsPageDescription";
 import Sidebar from "@/components/Sidebar";
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default async function ArtistsPage() {
       <Sidebar className="hidden lg:block flex-shrink-0" data={sidebarData} />
       <div className="flex-1 min-w-0">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Artists</h1>
-        <p className="text-sm text-gray-500 mb-6">Discover artists and explore their works and license terms.</p>
+        <ArtistsPageDescription />
         <ArtistsFilter artists={artists} allStyleTags={allStyleTags} />
       </div>
     </div>
