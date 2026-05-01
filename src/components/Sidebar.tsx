@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import type { SidebarData } from "@/lib/types";
 import DeveloperOnly from "@/components/DeveloperOnly";
 
@@ -13,20 +12,20 @@ interface SidebarProps {
 
 function SidebarContent({ data }: { data: SidebarData }) {
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {/* Trending Tags */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-2">
+        <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1.5">
           Trending Tags
         </h3>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1">
           {data.trendingTags.map(({ name }) => (
             <Link
               key={name}
               href={`/works?q=${encodeURIComponent(name)}`}
-              className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+              className="inline-flex items-center px-2 py-0.5 text-[11px] font-medium text-gray-500 rounded-full hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
             >
-              {name}
+              #{name}
             </Link>
           ))}
         </div>
@@ -34,27 +33,17 @@ function SidebarContent({ data }: { data: SidebarData }) {
 
       {/* Featured Artists */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-2">
+        <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1.5">
           Featured Artists
         </h3>
-        <div className="space-y-2.5">
+        <div className="space-y-1">
           {data.featuredArtists.map((artist) => (
             <Link
               key={artist.slug}
               href={`/artists/${artist.slug}`}
-              className="flex items-center gap-2.5 group"
+              className="block text-[13px] text-gray-600 hover:text-indigo-600 transition-colors truncate"
             >
-              <Image
-                src={artist.iconUrl}
-                alt={artist.displayName}
-                width={28}
-                height={28}
-                className="rounded-full flex-shrink-0"
-                unoptimized
-              />
-              <span className="text-sm text-gray-700 group-hover:text-indigo-600 transition-colors truncate">
-                {artist.displayName}
-              </span>
+              {artist.displayName}
             </Link>
           ))}
         </div>
@@ -62,27 +51,17 @@ function SidebarContent({ data }: { data: SidebarData }) {
 
       {/* New Works */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-2">
+        <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1.5">
           New Works
         </h3>
-        <div className="space-y-2.5">
+        <div className="space-y-1">
           {data.newWorks.map((work) => (
             <Link
               key={work.slug}
               href={`/works/${work.slug}`}
-              className="flex items-center gap-2.5 group"
+              className="block text-[13px] text-gray-600 hover:text-indigo-600 transition-colors truncate"
             >
-              <Image
-                src={work.coverImageUrl}
-                alt={work.title}
-                width={40}
-                height={30}
-                className="rounded object-cover flex-shrink-0"
-                unoptimized
-              />
-              <span className="text-sm text-gray-700 group-hover:text-indigo-600 transition-colors truncate">
-                {work.title}
-              </span>
+              {work.title}
             </Link>
           ))}
         </div>
@@ -91,31 +70,31 @@ function SidebarContent({ data }: { data: SidebarData }) {
       <DeveloperOnly>
       {/* License Quick Filters - Developer限定 */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 tracking-wider mb-2">
+        <h3 className="text-[11px] font-medium text-gray-400 tracking-wider mb-1.5">
           利用条件で探す
         </h3>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1">
           <Link
             href="/works?commercial=allowed"
-            className="px-2.5 py-1 text-xs font-medium bg-green-50 text-green-700 rounded-full border border-green-200 hover:bg-green-100 transition-colors"
+            className="px-2 py-0.5 text-[11px] font-medium bg-green-50 text-green-700 rounded-full border border-green-200 hover:bg-green-100 transition-colors"
           >
             商用OK
           </Link>
           <Link
             href="/works?adult=allowed"
-            className="px-2.5 py-1 text-xs font-medium bg-purple-50 text-purple-700 rounded-full border border-purple-200 hover:bg-purple-100 transition-colors"
+            className="px-2 py-0.5 text-[11px] font-medium bg-purple-50 text-purple-700 rounded-full border border-purple-200 hover:bg-purple-100 transition-colors"
           >
             成人OK
           </Link>
           <Link
             href="/works?trainingType=light"
-            className="px-2.5 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded-full border border-blue-200 hover:bg-blue-100 transition-colors"
+            className="px-2 py-0.5 text-[11px] font-medium bg-blue-50 text-blue-700 rounded-full border border-blue-200 hover:bg-blue-100 transition-colors"
           >
             学習 Light
           </Link>
           <Link
             href="/works?trainingType=standard"
-            className="px-2.5 py-1 text-xs font-medium bg-orange-50 text-orange-700 rounded-full border border-orange-200 hover:bg-orange-100 transition-colors"
+            className="px-2 py-0.5 text-[11px] font-medium bg-orange-50 text-orange-700 rounded-full border border-orange-200 hover:bg-orange-100 transition-colors"
           >
             学習 Standard
           </Link>
@@ -132,7 +111,7 @@ export default function Sidebar({ className, data }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className={`w-56 ${className ?? ""}`}>
+      <aside className={`w-48 ${className ?? ""}`}>
         <SidebarContent data={data} />
       </aside>
 
@@ -158,9 +137,9 @@ export default function Sidebar({ className, data }: SidebarProps) {
             onClick={() => setDrawerOpen(false)}
           />
           {/* Drawer */}
-          <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl overflow-y-auto p-5">
+          <div className="fixed inset-y-0 left-0 w-56 bg-white shadow-xl overflow-y-auto p-4">
             <div className="flex items-center justify-between mb-5">
-              <span className="text-sm font-semibold text-gray-900">Explore</span>
+              <span className="text-xs font-semibold text-gray-900">Explore</span>
               <button
                 onClick={() => setDrawerOpen(false)}
                 className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
