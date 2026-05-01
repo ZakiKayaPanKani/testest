@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { SidebarData } from "@/lib/types";
+import DeveloperOnly from "@/components/DeveloperOnly";
 
 interface SidebarProps {
   className?: string;
@@ -12,10 +13,10 @@ interface SidebarProps {
 
 function SidebarContent({ data }: { data: SidebarData }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Trending Tags */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-2">
           Trending Tags
         </h3>
         <div className="flex flex-wrap gap-1.5">
@@ -33,10 +34,10 @@ function SidebarContent({ data }: { data: SidebarData }) {
 
       {/* Featured Artists */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-2">
           Featured Artists
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {data.featuredArtists.map((artist) => (
             <Link
               key={artist.slug}
@@ -61,10 +62,10 @@ function SidebarContent({ data }: { data: SidebarData }) {
 
       {/* New Works */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-2">
           New Works
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {data.newWorks.map((work) => (
             <Link
               key={work.slug}
@@ -87,9 +88,10 @@ function SidebarContent({ data }: { data: SidebarData }) {
         </div>
       </div>
 
-      {/* License Quick Filters */}
+      <DeveloperOnly>
+      {/* License Quick Filters - Developer限定 */}
       <div>
-        <h3 className="text-xs font-semibold text-gray-900 tracking-wider mb-3">
+        <h3 className="text-xs font-semibold text-gray-900 tracking-wider mb-2">
           利用条件で探す
         </h3>
         <div className="flex flex-wrap gap-1.5">
@@ -119,6 +121,7 @@ function SidebarContent({ data }: { data: SidebarData }) {
           </Link>
         </div>
       </div>
+      </DeveloperOnly>
     </div>
   );
 }
@@ -129,7 +132,7 @@ export default function Sidebar({ className, data }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className={`w-64 ${className ?? ""}`}>
+      <aside className={`w-56 ${className ?? ""}`}>
         <SidebarContent data={data} />
       </aside>
 
@@ -155,7 +158,7 @@ export default function Sidebar({ className, data }: SidebarProps) {
             onClick={() => setDrawerOpen(false)}
           />
           {/* Drawer */}
-          <div className="fixed inset-y-0 left-0 w-72 bg-white shadow-xl overflow-y-auto p-5">
+          <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl overflow-y-auto p-5">
             <div className="flex items-center justify-between mb-5">
               <span className="text-sm font-semibold text-gray-900">Explore</span>
               <button
