@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { SidebarData } from "@/lib/types";
 import DeveloperOnly from "@/components/DeveloperOnly";
 
@@ -23,7 +24,7 @@ function SidebarContent({ data }: { data: SidebarData }) {
             <Link
               key={name}
               href={`/works?q=${encodeURIComponent(name)}`}
-              className="inline-flex items-center px-2 py-0.5 text-[11px] font-medium text-gray-500 rounded-full hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+              className="inline-flex items-center px-2 py-0.5 text-[11px] font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-full hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-colors"
             >
               #{name}
             </Link>
@@ -36,14 +37,24 @@ function SidebarContent({ data }: { data: SidebarData }) {
         <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1.5">
           Featured Artists
         </h3>
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           {data.featuredArtists.map((artist) => (
             <Link
               key={artist.slug}
               href={`/artists/${artist.slug}`}
-              className="block text-[13px] text-gray-600 hover:text-indigo-600 transition-colors truncate"
+              className="flex items-center gap-1.5 group"
             >
-              {artist.displayName}
+              <Image
+                src={artist.iconUrl}
+                alt={artist.displayName}
+                width={20}
+                height={20}
+                className="rounded-full flex-shrink-0"
+                unoptimized
+              />
+              <span className="text-[13px] text-gray-600 group-hover:text-indigo-600 transition-colors truncate">
+                {artist.displayName}
+              </span>
             </Link>
           ))}
         </div>
@@ -54,14 +65,24 @@ function SidebarContent({ data }: { data: SidebarData }) {
         <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1.5">
           New Works
         </h3>
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           {data.newWorks.map((work) => (
             <Link
               key={work.slug}
               href={`/works/${work.slug}`}
-              className="block text-[13px] text-gray-600 hover:text-indigo-600 transition-colors truncate"
+              className="flex items-center gap-1.5 group"
             >
-              {work.title}
+              <Image
+                src={work.coverImageUrl}
+                alt={work.title}
+                width={28}
+                height={20}
+                className="rounded-sm object-cover flex-shrink-0"
+                unoptimized
+              />
+              <span className="text-[13px] text-gray-600 group-hover:text-indigo-600 transition-colors truncate">
+                {work.title}
+              </span>
             </Link>
           ))}
         </div>
