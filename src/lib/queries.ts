@@ -192,6 +192,16 @@ export async function getFeaturedWorks(count: number): Promise<WorkForCard[]> {
   return works.map(toWorkForCard);
 }
 
+export async function getNewWorks(count: number): Promise<WorkForCard[]> {
+  const works = await prisma.work.findMany({
+    where: { status: "public" },
+    include: workInclude,
+    orderBy: { createdAt: "desc" },
+    take: count,
+  });
+  return works.map(toWorkForCard);
+}
+
 export async function getWorkBySlug(slug: string): Promise<WorkForCard | null> {
   const w = await prisma.work.findFirst({
     where: { slug, status: "public" },
@@ -222,7 +232,7 @@ export async function getAllArtists(): Promise<ArtistForCard[]> {
       works: {
         where: { status: "public" },
         select: { coverImageUrl: true },
-        take: 1,
+        take: 3,
       },
       _count: {
         select: { works: true },
@@ -241,7 +251,7 @@ export async function getAllArtists(): Promise<ArtistForCard[]> {
     styleTags: a.styleTags as string[],
     policySummary: a.policySummary,
     worksCount: a._count.works,
-    previewImageUrl: a.works[0]?.coverImageUrl ?? null,
+    previewImageUrls: a.works.map((w) => w.coverImageUrl),
   }));
 }
 
