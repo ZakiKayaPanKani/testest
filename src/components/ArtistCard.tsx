@@ -8,19 +8,36 @@ interface ArtistCardProps {
 }
 
 export default function ArtistCard({ artist }: ArtistCardProps) {
+  const images = artist.previewImageUrls;
+
   return (
     <Link href={`/artists/${artist.slug}`} className="group block">
       <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-        {artist.previewImageUrl && (
-          <div className="relative aspect-[16/9] overflow-hidden bg-gray-100">
-            <Image
-              src={artist.previewImageUrl}
-              alt={`${artist.displayName} featured work`}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              unoptimized
-            />
+        {images.length > 0 && (
+          <div className="relative aspect-[16/9] overflow-hidden bg-gray-100 flex">
+            {images.length === 1 ? (
+              <Image
+                src={images[0]}
+                alt={`${artist.displayName} featured work`}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                unoptimized
+              />
+            ) : (
+              images.map((url, i) => (
+                <div key={i} className="relative flex-1 overflow-hidden">
+                  <Image
+                    src={url}
+                    alt={`${artist.displayName} work ${i + 1}`}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes={`(max-width: 640px) ${Math.floor(100 / images.length)}vw, ${Math.floor(50 / images.length)}vw`}
+                    unoptimized
+                  />
+                </div>
+              ))
+            )}
           </div>
         )}
         <div className="p-4 space-y-2">

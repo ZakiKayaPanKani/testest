@@ -44,7 +44,7 @@ export interface ArtistForCard {
   styleTags: string[];
   policySummary: string;
   worksCount: number;
-  previewImageUrl: string | null;
+  previewImageUrls: string[];
 }
 
 export interface ArtistWithWorks {
