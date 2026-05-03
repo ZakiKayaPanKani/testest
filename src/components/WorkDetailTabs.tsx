@@ -136,15 +136,6 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
           <TagPills tags={artwork.tags.map((t) => t.name)} />
 
           <WorkActions likes={artwork.likesCount} comments={artwork.commentsCount} />
-
-          {user?.isDeveloper && (
-            <button
-              onClick={() => setActiveTab("license")}
-              className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
-            >
-              この作品の利用条件を確認 &rarr;
-            </button>
-          )}
         </div>
       )}
 
