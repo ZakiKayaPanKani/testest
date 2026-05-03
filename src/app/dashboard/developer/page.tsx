@@ -63,7 +63,7 @@ export default function DeveloperDashboardPage() {
   if (isLoading || (user?.isDeveloper && dataLoading)) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <div className="animate-pulse text-gray-400">Loading...</div>
+        <div className="animate-pulse text-gray-400">読み込み中...</div>
       </div>
     );
   }
@@ -81,23 +81,23 @@ export default function DeveloperDashboardPage() {
             </svg>
           </div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">
-            Developer tools are not enabled for this account yet.
+            このアカウントではDeveloper機能が有効になっていません
           </h2>
           <p className="text-sm text-gray-500 mb-6 max-w-md mx-auto">
-            デベロッパーツールを有効にすると、作品の取得・ライセンス管理、利用ログ、ダウンロードなどの機能が利用できます。
+            Developer機能を有効にすると、表示された利用条件に基づく許諾取得と、取得した許諾の証跡管理が行えるようになります。
           </p>
           <div className="flex items-center justify-center gap-3">
             <button
               onClick={() => alert("この機能はプロトタイプでは利用できません。デモアカウント dev@artli.dev でお試しください。")}
               className="px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
             >
-              Enable Developer Tools
+              Developer機能を有効にする
             </button>
             <Link
               href="/"
               className="px-5 py-2.5 text-sm font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              Back to Home
+              ホームに戻る
             </Link>
           </div>
         </div>
@@ -114,22 +114,25 @@ export default function DeveloperDashboardPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Page header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Developer Dashboard</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Developer 許諾管理</h1>
         <p className="mt-1 text-sm text-gray-500">
-          Welcome back, {profile?.companyName ?? user.displayName}
+          ようこそ、{profile?.companyName ?? user.displayName} さん
+        </p>
+        <p className="mt-2 text-sm text-gray-500">
+          取得済みの利用許諾と、取得時点の作品情報・利用条件の証跡を確認できます。
         </p>
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        <SummaryCard label="Acquired Works" value={acqs.length} color="indigo" />
-        <SummaryCard label="Commercial Allowed" value={commercialAllowed} color="green" />
-        <SummaryCard label="Consultation Required" value={consultRequired} color="yellow" />
-        <SummaryCard label="Recent Acquisitions" value={recentAcqs.length} color="blue" />
+        <SummaryCard label="取得済み許諾" value={acqs.length} color="indigo" />
+        <SummaryCard label="商用利用可" value={commercialAllowed} color="green" />
+        <SummaryCard label="要相談" value={consultRequired} color="yellow" />
+        <SummaryCard label="最近の許諾取得" value={recentAcqs.length} color="blue" />
       </div>
 
       {/* Acquisitions list */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Acquisition History</h2>
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">許諾取得履歴</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {acqs.map((acq) => (
           <div key={acq.id} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
@@ -143,18 +146,18 @@ export default function DeveloperDashboardPage() {
               />
               {acq.commercialAllowed ? (
                 <span className="absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full bg-green-100 text-green-700">
-                  Commercial OK
+                  商用OK
                 </span>
               ) : (
                 <span className="absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full bg-yellow-100 text-yellow-700">
-                  Consult
+                  要相談
                 </span>
               )}
             </div>
             <div className="p-4">
               <h3 className="font-semibold text-gray-900 mb-1">{acq.workTitle}</h3>
               <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
-                <span>by</span>
+                <span>作家:</span>
                 <Link
                   href={`/artists/${acq.artistId}`}
                   className="text-indigo-600 hover:text-indigo-700 font-medium"
@@ -162,7 +165,7 @@ export default function DeveloperDashboardPage() {
                   {acq.artistName}
                 </Link>
               </div>
-              <p className="text-xs text-gray-400 mb-2">Acquired: {acq.acquiredAt}</p>
+              <p className="text-xs text-gray-400 mb-2">取得日: {acq.acquiredAt}</p>
               <p className="text-xs text-gray-600 bg-gray-50 rounded-lg px-2.5 py-1.5 mb-3">
                 {acq.licenseSummary}
               </p>
@@ -171,7 +174,7 @@ export default function DeveloperDashboardPage() {
                   href={`/works/${acq.workId}`}
                   className="flex-1 text-center text-xs font-medium text-indigo-600 border border-indigo-200 rounded-lg py-1.5 hover:bg-indigo-50 transition-colors"
                 >
-                  View Work
+                  作品詳細
                 </Link>
                 <button
                   onClick={() => {
@@ -179,13 +182,13 @@ export default function DeveloperDashboardPage() {
                   }}
                   className="flex-1 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg py-1.5 hover:bg-gray-50 transition-colors"
                 >
-                  Download
+                  証跡JSON
                 </button>
                 <button
                   onClick={() => alert("Usage Log — プロトタイプでは利用不可")}
                   className="flex-1 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg py-1.5 hover:bg-gray-50 transition-colors"
                 >
-                  Usage Log
+                  利用記録
                 </button>
               </div>
             </div>
