@@ -36,7 +36,14 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
   });
 
   const license = artwork.license;
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+  const showTabs = !!user?.isDeveloper;
+
+  useEffect(() => {
+    if (!isLoading && !user?.isDeveloper && activeTab === "license") {
+      setActiveTab("overview");
+    }
+  }, [user, activeTab, isLoading]);
 
   const [acquireStatus, setAcquireStatus] = useState<{
     isDeveloper: boolean;
@@ -88,29 +95,31 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
 
   return (
     <div>
-      {/* Tabs */}
-      <div className="flex border-b border-gray-200 mb-6">
-        <button
-          onClick={() => setActiveTab("overview")}
-          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
-            activeTab === "overview"
-              ? "border-indigo-600 text-indigo-600"
-              : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-          }`}
-        >
-          概要
-        </button>
-        <button
-          onClick={() => setActiveTab("license")}
-          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
-            activeTab === "license"
-              ? "border-indigo-600 text-indigo-600"
-              : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-          }`}
-        >
-          利用条件
-        </button>
-      </div>
+      {/* Tabs (Developer only) */}
+      {showTabs && (
+        <div className="flex border-b border-gray-200 mb-6">
+          <button
+            onClick={() => setActiveTab("overview")}
+            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === "overview"
+                ? "border-indigo-600 text-indigo-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            概要
+          </button>
+          <button
+            onClick={() => setActiveTab("license")}
+            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === "license"
+                ? "border-indigo-600 text-indigo-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            利用条件
+          </button>
+        </div>
+      )}
 
       {/* Overview Tab */}
       {activeTab === "overview" && (
@@ -124,16 +133,18 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
 
           <p className="text-gray-600 leading-relaxed">{artwork.description}</p>
 
-          <WorkActions likes={artwork.likesCount} comments={artwork.commentsCount} />
-
           <TagPills tags={artwork.tags.map((t) => t.name)} />
 
-          <button
-            onClick={() => setActiveTab("license")}
-            className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
-          >
-            この作品の利用条件を確認 &rarr;
-          </button>
+          <WorkActions likes={artwork.likesCount} comments={artwork.commentsCount} />
+
+          {user?.isDeveloper && (
+            <button
+              onClick={() => setActiveTab("license")}
+              className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+            >
+              この作品の利用条件を確認 &rarr;
+            </button>
+          )}
         </div>
       )}
 

@@ -226,6 +226,24 @@ export async function getWorksByArtistSlug(
   return works.map(toWorkForCard);
 }
 
+export async function getWorksByTag(
+  tagName: string,
+  excludeWorkId: string,
+  limit: number = 6,
+): Promise<WorkForCard[]> {
+  const works = await prisma.work.findMany({
+    where: {
+      status: "public",
+      id: { not: excludeWorkId },
+      tags: { some: { name: tagName } },
+    },
+    include: workInclude,
+    orderBy: { createdAt: "desc" },
+    take: limit,
+  });
+  return works.map(toWorkForCard);
+}
+
 export async function getAllArtists(): Promise<ArtistForCard[]> {
   const artists = await prisma.artistProfile.findMany({
     include: {
