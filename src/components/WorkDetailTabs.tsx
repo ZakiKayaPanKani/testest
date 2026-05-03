@@ -36,14 +36,14 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
   });
 
   const license = artwork.license;
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const showTabs = !!user?.isDeveloper;
 
   useEffect(() => {
-    if (!user?.isDeveloper && activeTab === "license") {
+    if (!isLoading && !user?.isDeveloper && activeTab === "license") {
       setActiveTab("overview");
     }
-  }, [user, activeTab]);
+  }, [user, activeTab, isLoading]);
 
   const [acquireStatus, setAcquireStatus] = useState<{
     isDeveloper: boolean;
