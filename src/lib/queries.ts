@@ -316,6 +316,7 @@ export async function getDashboardWorksByUserSlug(userSlug: string) {
           works: {
             include: {
               license: true,
+              tags: { select: { name: true } },
               _count: { select: { acquisitions: true } },
             },
             orderBy: { createdAt: "desc" },
@@ -337,6 +338,8 @@ export async function getDashboardWorksByUserSlug(userSlug: string) {
     acquisitions: w._count.acquisitions,
     createdAt: w.createdAt.toISOString().slice(0, 10),
     updatedAt: w.updatedAt.toISOString().slice(0, 10),
+    description: w.description,
+    tags: w.tags.map((t) => t.name),
     licenseTerms: w.license
       ? {
           commercial: w.license.commercial,
