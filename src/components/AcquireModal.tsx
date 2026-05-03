@@ -25,10 +25,10 @@ export default function AcquireModal({ license, acquiring, onConfirm, onCancel }
       <div className="fixed inset-0 bg-black/40" onClick={onCancel} />
       <div className="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6 space-y-5">
         <h2 className="text-lg font-bold text-gray-900">
-          この作品の利用権を取得しますか？
+          この条件で許諾を取得しますか？
         </h2>
         <div className="text-sm text-gray-700 space-y-3">
-          <p>この操作により、以下の条件でこの作品を利用できます。</p>
+          <p>以下の利用条件に基づく許諾を取得します。</p>
           <div className="bg-gray-50 rounded-lg p-4 space-y-2 border border-gray-200">
             <div className="font-medium text-gray-900">&yen;{license.priceJpy.toLocaleString()}</div>
             <div>・商用利用：{licenseValueText(license.commercial)}</div>
@@ -38,7 +38,8 @@ export default function AcquireModal({ license, acquiring, onConfirm, onCancel }
           </div>
           <div className="text-xs text-gray-500 space-y-1">
             <p>※条件は作家によって設定されています</p>
-            <p>※取得内容は履歴として保存されます</p>
+            <p>※これは画像データの購入や著作権の譲渡ではありません。表示された利用条件に基づく利用許諾の取得です。</p>
+            <p>※取得時点の作品情報と利用条件は、証跡として保存されます。</p>
           </div>
         </div>
         <label className="flex items-start gap-2 cursor-pointer">
@@ -48,7 +49,7 @@ export default function AcquireModal({ license, acquiring, onConfirm, onCancel }
             onChange={(e) => setAgreed(e.target.checked)}
             className="mt-0.5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
           />
-          <span className="text-sm text-gray-700">上記の条件を確認しました</span>
+          <span className="text-sm text-gray-700">上記の利用条件を確認しました</span>
         </label>
         <div className="flex gap-3 justify-end">
           <button
@@ -62,7 +63,7 @@ export default function AcquireModal({ license, acquiring, onConfirm, onCancel }
             disabled={!agreed || acquiring}
             className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {acquiring ? "取得中..." : "同意して取得"}
+            {acquiring ? "取得中..." : "利用条件に同意して許諾取得"}
           </button>
         </div>
       </div>

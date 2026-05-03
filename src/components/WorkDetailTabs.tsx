@@ -98,7 +98,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
               : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
           }`}
         >
-          Overview
+          概要
         </button>
         <button
           onClick={() => setActiveTab("license")}
@@ -108,7 +108,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
               : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
           }`}
         >
-          License
+          利用条件
         </button>
       </div>
 
@@ -202,7 +202,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
                   href="/dashboard/developer"
                   className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
                 >
-                  取得履歴で確認 &rarr;
+                  許諾取得履歴で確認 &rarr;
                 </a>
               </div>
             )}
@@ -218,10 +218,10 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
                     disabled={acquiring}
                     className="px-6 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
                   >
-                    {acquiring ? "取得中..." : "この作品の利用権を取得する"}
+                    {acquiring ? "取得中..." : "この条件で許諾を取得"}
                   </button>
                   <p className="text-xs text-gray-500">
-                    取得後、条件に基づいてAI学習等に利用できます
+                    取得後、表示された条件に基づいて利用できます
                   </p>
                 </div>
               )}
@@ -237,7 +237,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
                     要相談
                   </span>
                   <p className="text-xs text-gray-500">
-                    この作品の取得には個別相談が必要です
+                    要相談の条件が含まれるため、現在の自動取得フローでは許諾取得できません。個別相談が必要です。
                   </p>
                 </div>
               )}
@@ -249,7 +249,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
           </div>
 
           <p className="text-xs text-gray-400">
-            Terms shown here describe allowed usage.
+            ここに表示される内容は、この作品に設定された利用条件です。
           </p>
         </div>
       )}
