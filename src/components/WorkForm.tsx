@@ -75,7 +75,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Work section */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Work Information</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">作品情報</h2>
         <div className="space-y-4">
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
@@ -133,30 +133,38 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
               placeholder="fantasy, landscape, character"
             />
           </div>
-
-          {mode === "edit" && (
-            <div>
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
-                Status
-              </label>
-              <select
-                id="status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-              >
-                <option value="draft">Draft</option>
-                <option value="private">Private</option>
-                <option value="public">Public</option>
-              </select>
-            </div>
-          )}
         </div>
+      </div>
+
+      {/* 公開設定 section */}
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">公開設定</h2>
+        {mode === "edit" ? (
+          <div>
+            <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
+              Status
+            </label>
+            <select
+              id="status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+            >
+              <option value="draft">Draft</option>
+              <option value="private">Private</option>
+              <option value="public">Public</option>
+            </select>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500">
+            新規作成時は下書きとして保存されます。公開状態は保存後の編集画面から変更できます。
+          </p>
+        )}
       </div>
 
       {/* License section */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">License Settings</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">利用条件</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="commercial" className="block text-sm font-medium text-gray-700 mb-1">
