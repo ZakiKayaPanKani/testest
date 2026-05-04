@@ -79,7 +79,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
         <div className="space-y-4">
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Title <span className="text-red-500">*</span>
+              タイトル <span className="text-red-500">*</span>
             </label>
             <input
               id="title"
@@ -88,13 +88,13 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-              placeholder="Work title"
+              placeholder="作品タイトル"
             />
           </div>
 
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-              Description
+              説明
             </label>
             <textarea
               id="description"
@@ -102,13 +102,13 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-              placeholder="Describe your work..."
+              placeholder="作品の説明を入力"
             />
           </div>
 
           <div>
             <label htmlFor="coverImageUrl" className="block text-sm font-medium text-gray-700 mb-1">
-              Cover Image URL
+              カバー画像URL
             </label>
             <input
               id="coverImageUrl"
@@ -122,7 +122,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
 
           <div>
             <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-1">
-              Tags (comma-separated)
+              タグ（カンマ区切り）
             </label>
             <input
               id="tags"
@@ -130,7 +130,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
               value={tagsStr}
               onChange={(e) => setTagsStr(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-              placeholder="fantasy, landscape, character"
+              placeholder="ファンタジー, 風景, キャラクター"
             />
           </div>
         </div>
@@ -142,7 +142,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
         {mode === "edit" ? (
           <div>
             <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
-              Status
+              公開状態
             </label>
             <select
               id="status"
@@ -150,9 +150,9 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
               onChange={(e) => setStatus(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
             >
-              <option value="draft">Draft</option>
-              <option value="private">Private</option>
-              <option value="public">Public</option>
+              <option value="draft">下書き</option>
+              <option value="private">非公開</option>
+              <option value="public">公開中</option>
             </select>
           </div>
         ) : (
@@ -168,7 +168,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="commercial" className="block text-sm font-medium text-gray-700 mb-1">
-              Commercial Use <span className="text-red-500">*</span>
+              商用利用 <span className="text-red-500">*</span>
             </label>
             <select
               id="commercial"
@@ -184,7 +184,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
 
           <div>
             <label htmlFor="adult" className="block text-sm font-medium text-gray-700 mb-1">
-              Adult Content <span className="text-red-500">*</span>
+              成人向け利用 <span className="text-red-500">*</span>
             </label>
             <select
               id="adult"
@@ -200,7 +200,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
 
           <div>
             <label htmlFor="trainingType" className="block text-sm font-medium text-gray-700 mb-1">
-              Training Type <span className="text-red-500">*</span>
+              AI学習 <span className="text-red-500">*</span>
             </label>
             <select
               id="trainingType"
@@ -216,7 +216,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
 
           <div>
             <label htmlFor="redistribution" className="block text-sm font-medium text-gray-700 mb-1">
-              Redistribution <span className="text-red-500">*</span>
+              再配布 <span className="text-red-500">*</span>
             </label>
             <select
               id="redistribution"
@@ -232,7 +232,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
 
           <div className="sm:col-span-2">
             <label htmlFor="priceJpy" className="block text-sm font-medium text-gray-700 mb-1">
-              Price (JPY) <span className="text-red-500">*</span>
+              価格（円） <span className="text-red-500">*</span>
             </label>
             <input
               id="priceJpy"
@@ -256,7 +256,7 @@ export default function WorkForm({ mode, initialData, onSubmit, isSubmitting }: 
           className="px-6 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting
-            ? "Saving..."
+            ? "保存中..."
             : mode === "create"
               ? "作品を作成"
               : "変更を保存"}
