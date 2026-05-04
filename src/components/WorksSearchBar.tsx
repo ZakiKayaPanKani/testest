@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback, useEffect } from "react";
+import DeveloperOnly from "@/components/DeveloperOnly";
 import type { WorksSearchFilters } from "@/lib/queries";
 
 const trainingTypes = [
@@ -104,57 +105,59 @@ export default function WorksSearchBar({ filters }: WorksSearchBarProps) {
       </div>
 
       {/* Filter chips */}
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-medium text-gray-500">学習許諾:</span>
-        {trainingTypes.map(({ value, label }) => (
+      <DeveloperOnly>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-medium text-gray-500">学習許諾:</span>
+          {trainingTypes.map(({ value, label }) => (
+            <button
+              key={value}
+              onClick={() => toggleTrainingType(value)}
+              className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
+                filters.trainingType === value
+                  ? "bg-indigo-600 text-white border-indigo-600"
+                  : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+
+          <span className="mx-1 h-4 w-px bg-gray-200" />
+
           <button
-            key={value}
-            onClick={() => toggleTrainingType(value)}
+            onClick={() => toggleChip("commercial", "allowed")}
             className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
-              filters.trainingType === value
-                ? "bg-indigo-600 text-white border-indigo-600"
+              filters.commercial === "allowed"
+                ? "bg-green-600 text-white border-green-600"
                 : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
             }`}
           >
-            {label}
+            商用OKのみ
           </button>
-        ))}
 
-        <span className="mx-1 h-4 w-px bg-gray-200" />
+          <button
+            onClick={() => toggleChip("adult", "allowed")}
+            className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
+              filters.adult === "allowed"
+                ? "bg-purple-600 text-white border-purple-600"
+                : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            成人向けOKのみ
+          </button>
 
-        <button
-          onClick={() => toggleChip("commercial", "allowed")}
-          className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
-            filters.commercial === "allowed"
-              ? "bg-green-600 text-white border-green-600"
-              : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
-          }`}
-        >
-          商用OKのみ
-        </button>
-
-        <button
-          onClick={() => toggleChip("adult", "allowed")}
-          className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
-            filters.adult === "allowed"
-              ? "bg-purple-600 text-white border-purple-600"
-              : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
-          }`}
-        >
-          成人向けOKのみ
-        </button>
-
-        <button
-          onClick={toggleConsult}
-          className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
-            filters.consult === "exclude"
-              ? "bg-amber-600 text-white border-amber-600"
-              : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
-          }`}
-        >
-          要相談作品を除く
-        </button>
-      </div>
+          <button
+            onClick={toggleConsult}
+            className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
+              filters.consult === "exclude"
+                ? "bg-amber-600 text-white border-amber-600"
+                : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            要相談作品を除く
+          </button>
+        </div>
+      </DeveloperOnly>
     </div>
   );
 }
