@@ -17,7 +17,7 @@ function SidebarContent({ data }: { data: SidebarData }) {
       {/* Trending Tags */}
       <div>
         <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1.5">
-          Trending Tags
+          人気タグ
         </h3>
         <div className="flex flex-wrap gap-1">
           {data.trendingTags.map(({ name }) => (
@@ -35,7 +35,7 @@ function SidebarContent({ data }: { data: SidebarData }) {
       {/* Featured Artists */}
       <div>
         <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1.5">
-          Featured Artists
+          注目クリエイター
         </h3>
         <div className="space-y-1.5">
           {data.featuredArtists.map((artist) => (
@@ -63,7 +63,7 @@ function SidebarContent({ data }: { data: SidebarData }) {
       {/* New Works */}
       <div>
         <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1.5">
-          New Works
+          新着作品
         </h3>
         <div className="space-y-1.5">
           {data.newWorks.map((work) => (
@@ -142,7 +142,7 @@ export default function Sidebar({ className, data }: SidebarProps) {
           onClick={() => setDrawerOpen(true)}
           className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
         >
-          Explore
+          さがす
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -160,7 +160,7 @@ export default function Sidebar({ className, data }: SidebarProps) {
           {/* Drawer */}
           <div className="fixed inset-y-0 left-0 w-56 bg-white shadow-xl overflow-y-auto p-4">
             <div className="flex items-center justify-between mb-5">
-              <span className="text-xs font-semibold text-gray-900">Explore</span>
+              <span className="text-xs font-semibold text-gray-900">さがす</span>
               <button
                 onClick={() => setDrawerOpen(false)}
                 className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
