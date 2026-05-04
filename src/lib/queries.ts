@@ -4,6 +4,7 @@ import type {
   WorkForCard,
   ArtistForCard,
   ArtistWithWorks,
+  DashboardWork,
   LicenseValue,
   TrainingType,
   SidebarData,
@@ -307,7 +308,7 @@ export async function getArtistBySlug(slug: string): Promise<ArtistWithWorks | n
 
 // ─── Dashboard Queries ──────────────────────────────────────────────────────
 
-export async function getDashboardWorksByUserSlug(userSlug: string) {
+export async function getDashboardWorksByUserSlug(userSlug: string): Promise<DashboardWork[]> {
   const user = await prisma.user.findUnique({
     where: { slug: userSlug },
     include: {

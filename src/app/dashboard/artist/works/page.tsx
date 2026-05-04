@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
 import TagPills from "@/components/TagPills";
-import type { LicenseValue, TrainingType } from "@/lib/types";
+import type { DashboardWork, LicenseValue, TrainingType } from "@/lib/types";
 
 const statusStyles: Record<string, string> = {
   public: "bg-green-100 text-green-700",
@@ -18,26 +18,6 @@ const statusLabels: Record<string, string> = {
   private: "非公開",
   draft: "下書き",
 };
-
-interface DashboardWork {
-  id: string;
-  slug: string;
-  title: string;
-  imageUrl: string;
-  status: string;
-  likes: number;
-  acquisitions: number;
-  createdAt: string;
-  updatedAt: string;
-  description: string;
-  tags: string[];
-  licenseTerms: {
-    commercial: string;
-    adult: string;
-    trainingType: string;
-    redistribution: string;
-  } | null;
-}
 
 function getLicenseHighlights(
   terms: DashboardWork["licenseTerms"]
