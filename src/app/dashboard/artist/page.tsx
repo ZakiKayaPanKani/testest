@@ -30,6 +30,18 @@ interface ArtistDashboardProfile {
   policySummary: string;
 }
 
+const statusStyles: Record<string, string> = {
+  public: "bg-green-100 text-green-700",
+  private: "bg-gray-100 text-gray-600",
+  draft: "bg-yellow-100 text-yellow-700",
+};
+
+const statusLabels: Record<string, string> = {
+  public: "公開中",
+  private: "非公開",
+  draft: "下書き",
+};
+
 export default function ArtistDashboardPage() {
   const router = useRouter();
   const { user, isLoading } = useAuth();
@@ -112,15 +124,18 @@ export default function ArtistDashboardPage() {
   const publicWorks = works.filter((w) => w.status === "public").length;
   const privateWorks = works.filter((w) => w.status === "private").length;
   const draftWorks = works.filter((w) => w.status === "draft").length;
+  const recentWorks = [...works]
+    .sort((a, b) => (b.updatedAt > a.updatedAt ? 1 : b.updatedAt < a.updatedAt ? -1 : 0))
+    .slice(0, 4);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Page header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Artist Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-900">アーティストダッシュボード</h1>
           <p className="mt-1 text-sm text-gray-500">
-            Welcome back, {profile?.displayName ?? user.displayName}
+            おかえりなさい、{profile?.displayName ?? user.displayName}
           </p>
         </div>
         <Link
@@ -130,30 +145,117 @@ export default function ArtistDashboardPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-          New Work
+          新しい作品を投稿
         </Link>
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        <SummaryCard label="Total Works" value={totalWorks} color="indigo" />
-        <SummaryCard label="Public" value={publicWorks} color="green" />
-        <SummaryCard label="Private" value={privateWorks} color="yellow" />
-        <SummaryCard label="Draft" value={draftWorks} color="pink" />
+        <SummaryCard label="総作品数" value={totalWorks} color="indigo" />
+        <SummaryCard label="公開中" value={publicWorks} color="green" />
+        <SummaryCard label="非公開" value={privateWorks} color="yellow" />
+        <SummaryCard label="下書き" value={draftWorks} color="pink" />
       </div>
 
-      {/* Manage works button */}
-      <div className="flex justify-center">
+      {/* クイックアクション */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+        <Link
+          href="/dashboard/artist/works/new"
+          className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:border-indigo-300 hover:shadow-md transition-all"
+        >
+          <div className="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-gray-900">新しい作品を投稿</p>
+            <p className="text-xs text-gray-500">作品を作成して公開する</p>
+          </div>
+        </Link>
         <Link
           href="/dashboard/artist/works"
-          className="px-6 py-3 bg-white text-indigo-600 text-sm font-medium rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors flex items-center gap-2"
+          className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:border-indigo-300 hover:shadow-md transition-all"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-          作品を管理
+          <div className="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-gray-900">作品を管理</p>
+            <p className="text-xs text-gray-500">投稿した作品の一覧と編集</p>
+          </div>
         </Link>
       </div>
+
+      {/* 最近更新した作品 */}
+      <div className="mb-10">
+        <h2 className="text-lg font-bold text-gray-900 mb-4">最近更新した作品</h2>
+        {recentWorks.length === 0 ? (
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 text-center">
+            <p className="text-sm text-gray-500 mb-4">まだ作品がありません。最初の作品を投稿してみましょう。</p>
+            <Link
+              href="/dashboard/artist/works/new"
+              className="inline-flex px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              新しい作品を投稿
+            </Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {recentWorks.map((work) => (
+              <div
+                key={work.id}
+                className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden"
+              >
+                <div className="w-full h-32 bg-gray-100">
+                  {work.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={work.imageUrl}
+                      alt={work.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-100" />
+                  )}
+                </div>
+                <div className="p-3">
+                  <h3 className="text-sm font-bold text-gray-900 truncate mb-1">{work.title}</h3>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${statusStyles[work.status] ?? "bg-gray-100 text-gray-600"}`}>
+                      {statusLabels[work.status] ?? work.status}
+                    </span>
+                    <span className="text-xs text-gray-400">{work.updatedAt}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/dashboard/artist/works/${work.id}/edit`}
+                      className="text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
+                    >
+                      編集
+                    </Link>
+                    {work.status === "public" && (
+                      <Link
+                        href={`/works/${work.slug}`}
+                        className="text-xs font-medium text-gray-600 hover:text-gray-800 transition-colors"
+                      >
+                        作品を見る
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* 案内文 */}
+      <p className="text-sm text-gray-500 text-center">
+        公開中の作品は作品一覧や作品詳細ページに表示されます。下書き・非公開作品は作品管理画面から編集できます。
+      </p>
     </div>
   );
 }
