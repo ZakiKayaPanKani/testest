@@ -118,12 +118,12 @@ export default function LoginPage() {
                     )}
                     {u.isDeveloper && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-600 font-medium">
-                        デベロッパー
+                        開発者
                       </span>
                     )}
                     {!u.isArtist && !u.isDeveloper && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 font-medium">
-                        ビューアー
+                        一般ユーザー
                       </span>
                     )}
                   </div>
