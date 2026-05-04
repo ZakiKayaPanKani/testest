@@ -48,7 +48,7 @@ export default function RegisterPage() {
               type="text"
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              placeholder="Your Name"
+              placeholder="お名前"
             />
           </div>
 
@@ -80,7 +80,7 @@ export default function RegisterPage() {
 
           {submitted && (
             <div className="bg-amber-50 text-amber-700 text-sm px-3 py-2 rounded-lg">
-              Registration is not available in this prototype. Please use one of the demo accounts below.
+              このプロトタイプでは新規登録は利用できません。デモアカウントでお試しください。
             </div>
           )}
 
@@ -88,7 +88,7 @@ export default function RegisterPage() {
             type="submit"
             className="w-full py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
           >
-            Create Account
+            アカウントを作成
           </button>
         </form>
 
@@ -102,7 +102,7 @@ export default function RegisterPage() {
         {/* Demo accounts helper */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-            Demo Accounts
+            デモアカウント
           </h3>
           <div className="space-y-2">
             {mockUsers.map((u) => (
@@ -117,17 +117,17 @@ export default function RegisterPage() {
                   <div className="flex gap-1">
                     {u.isArtist && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-600 font-medium">
-                        Artist
+                        クリエイター
                       </span>
                     )}
                     {u.isDeveloper && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-600 font-medium">
-                        Developer
+                        デベロッパー
                       </span>
                     )}
                     {!u.isArtist && !u.isDeveloper && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 font-medium">
-                        Viewer
+                        ビューアー
                       </span>
                     )}
                   </div>

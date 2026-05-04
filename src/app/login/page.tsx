@@ -78,7 +78,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
           >
-            Log In
+            ログイン
           </button>
         </form>
 
@@ -92,7 +92,7 @@ export default function LoginPage() {
         {/* Demo accounts helper */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-            Demo Accounts
+            デモアカウント
           </h3>
           <div className="space-y-2">
             {mockUsers.map((u) => (
@@ -113,17 +113,17 @@ export default function LoginPage() {
                   <div className="flex gap-1">
                     {u.isArtist && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-600 font-medium">
-                        Artist
+                        クリエイター
                       </span>
                     )}
                     {u.isDeveloper && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-600 font-medium">
-                        Developer
+                        デベロッパー
                       </span>
                     )}
                     {!u.isArtist && !u.isDeveloper && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 font-medium">
-                        Viewer
+                        ビューアー
                       </span>
                     )}
                   </div>

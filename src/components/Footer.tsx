@@ -15,35 +15,35 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">Browse</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">見る</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/works" className="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
-                  Works
+                  作品
                 </Link>
               </li>
               <li>
                 <Link href="/artists" className="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
-                  Artists
+                  クリエイター
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">Info</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">情報</h4>
             <ul className="space-y-2">
               <li>
-                <span className="text-sm text-gray-400">About (coming soon)</span>
+                <span className="text-sm text-gray-400">Artliについて（準備中）</span>
               </li>
               <li>
-                <span className="text-sm text-gray-400">Terms (coming soon)</span>
+                <span className="text-sm text-gray-400">利用規約（準備中）</span>
               </li>
             </ul>
           </div>
         </div>
         <div className="mt-8 pt-4 border-t border-gray-200">
           <p className="text-xs text-gray-400 text-center">
-            &copy; 2025 {BRAND.name} — Prototype
+            &copy; 2025-2026 {BRAND.name} — プロトタイプ
           </p>
         </div>
       </div>
