@@ -48,7 +48,7 @@ export default async function WorksPage({ searchParams }: WorksPageProps) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex gap-8" data-page="works">
       <Sidebar className="hidden lg:block flex-shrink-0" data={sidebarData} />
       <div className="flex-1 min-w-0">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">作品一覧</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">作品を探す</h1>
         <WorksPageDescription />
         <WorksSearchBar filters={filters} />
         <WorksResultInfo total={total} filters={filters} hasActiveFilters={hasActiveFilters} />

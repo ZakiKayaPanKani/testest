@@ -9,7 +9,7 @@ import { useAuth } from "@/lib/auth";
 const navLinks = [
   { href: "/", label: "ホーム" },
   { href: "/works", label: "作品" },
-  { href: "/artists", label: "作家" },
+  { href: "/artists", label: "クリエイター" },
 ];
 
 export default function Header() {
