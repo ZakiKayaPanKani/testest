@@ -4,24 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
-
-interface DashboardWork {
-  id: string;
-  slug: string;
-  title: string;
-  imageUrl: string;
-  status: string;
-  likes: number;
-  acquisitions: number;
-  createdAt: string;
-  updatedAt: string;
-  licenseTerms: {
-    commercial: string;
-    adult: string;
-    trainingType: string;
-    redistribution: string;
-  } | null;
-}
+import type { DashboardWork } from "@/lib/types";
 
 interface ArtistDashboardProfile {
   displayName: string;

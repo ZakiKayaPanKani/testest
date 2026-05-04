@@ -63,18 +63,19 @@ export interface DashboardWork {
   id: string;
   slug: string;
   title: string;
-  coverImageUrl: string;
+  description: string;
+  imageUrl: string;
   status: string;
-  likesCount: number;
-  commentsCount: number;
+  likes: number;
+  acquisitions: number;
   createdAt: string;
-  acquisitionCount: number;
-  license: {
-    commercial: LicenseValue;
-    adult: LicenseValue;
-    trainingType: TrainingType;
-    redistribution: LicenseValue;
-    priceJpy: number;
+  updatedAt: string;
+  tags: string[];
+  licenseTerms: {
+    commercial: string;
+    adult: string;
+    trainingType: string;
+    redistribution: string;
   } | null;
 }
 
