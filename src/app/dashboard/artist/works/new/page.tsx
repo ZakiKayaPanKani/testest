@@ -80,9 +80,9 @@ export default function NewWorkPage() {
           href="/dashboard/artist/works"
           className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors"
         >
-          &larr; Back to Works
+          &larr; 作品一覧に戻る
         </Link>
-        <h1 className="text-3xl font-bold text-gray-900 mt-2">Create New Work</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mt-2">新しい作品を投稿</h1>
         <p className="mt-1 text-sm text-gray-500">
           新規作成した作品は下書きとして保存されます。公開状態は作成後に編集画面から変更できます。
         </p>

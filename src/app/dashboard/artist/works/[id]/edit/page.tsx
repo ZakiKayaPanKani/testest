@@ -85,7 +85,7 @@ export default function EditWorkPage() {
             href="/dashboard/artist/works"
             className="inline-flex px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
           >
-            Back to Works
+            作品一覧に戻る
           </Link>
         </div>
       </div>
@@ -140,9 +140,9 @@ export default function EditWorkPage() {
           href="/dashboard/artist/works"
           className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors"
         >
-          &larr; Back to Works
+          &larr; 作品一覧に戻る
         </Link>
-        <h1 className="text-3xl font-bold text-gray-900 mt-2">Edit Work</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mt-2">作品を編集</h1>
         <p className="mt-1 text-sm text-gray-500">
           作品情報とライセンス設定を編集できます。
         </p>
