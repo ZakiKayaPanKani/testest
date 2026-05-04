@@ -34,14 +34,14 @@ export default function ArtistsFilter({ artists, allStyleTags }: ArtistsFilterPr
       <div className="bg-white rounded-xl border border-gray-200 p-4 mb-8 space-y-4">
         <input
           type="text"
-          placeholder="Search artists..."
+          placeholder="クリエイター名で検索"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         />
 
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-2">Style Tag</label>
+          <label className="block text-xs font-medium text-gray-500 mb-2">スタイルタグ</label>
           <div className="flex flex-wrap gap-1.5">
             <button
               onClick={() => setSelectedTag("All")}
@@ -51,7 +51,7 @@ export default function ArtistsFilter({ artists, allStyleTags }: ArtistsFilterPr
                   : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
               }`}
             >
-              All
+              すべて
             </button>
             {allStyleTags.map((tag) => (
               <button
@@ -70,7 +70,7 @@ export default function ArtistsFilter({ artists, allStyleTags }: ArtistsFilterPr
         </div>
       </div>
 
-      <p className="text-sm text-gray-500 mb-4">{filtered.length} artists found</p>
+      <p className="text-sm text-gray-500 mb-4">{filtered.length}人のクリエイターが見つかりました</p>
 
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -80,7 +80,7 @@ export default function ArtistsFilter({ artists, allStyleTags }: ArtistsFilterPr
         </div>
       ) : (
         <div className="text-center py-20">
-          <p className="text-gray-400 text-lg">No artists found matching your criteria.</p>
+          <p className="text-gray-400 text-lg">条件に一致するクリエイターが見つかりませんでした</p>
         </div>
       )}
     </>

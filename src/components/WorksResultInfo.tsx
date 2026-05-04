@@ -24,7 +24,7 @@ export default function WorksResultInfo({
 
   return (
     <div className="flex flex-wrap items-center gap-2 mb-4">
-      <span className="text-sm text-gray-500">{total} works</span>
+      <span className="text-sm text-gray-500">{total}件</span>
 
       {filterLabels.map(({ key, render }) => {
         const value = filters[key];
