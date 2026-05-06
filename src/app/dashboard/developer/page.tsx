@@ -81,17 +81,17 @@ export default function DeveloperDashboardPage() {
             </svg>
           </div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">
-            このアカウントではDeveloper機能が有効になっていません
+            このアカウントでは開発者機能が有効になっていません
           </h2>
           <p className="text-sm text-gray-500 mb-6 max-w-md mx-auto">
-            Developer機能を有効にすると、表示された利用条件に基づく許諾取得と、取得した許諾の証跡管理が行えるようになります。
+            開発者機能を有効にすると、表示された利用条件に基づく許諾取得と、取得した許諾の証跡管理が行えるようになります。
           </p>
           <div className="flex items-center justify-center gap-3">
             <button
               onClick={() => alert("この機能はプロトタイプでは利用できません。デモアカウント dev@artli.dev でお試しください。")}
               className="px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
             >
-              Developer機能を有効にする
+              開発者機能を有効にする
             </button>
             <Link
               href="/"
@@ -114,7 +114,7 @@ export default function DeveloperDashboardPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Page header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Developer 許諾管理</h1>
+        <h1 className="text-3xl font-bold text-gray-900">開発者 許諾管理</h1>
         <p className="mt-1 text-sm text-gray-500">
           ようこそ、{profile?.companyName ?? user.displayName} さん
         </p>
@@ -157,7 +157,7 @@ export default function DeveloperDashboardPage() {
             <div className="p-4">
               <h3 className="font-semibold text-gray-900 mb-1">{acq.workTitle}</h3>
               <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
-                <span>作家:</span>
+                <span>クリエイター:</span>
                 <Link
                   href={`/artists/${acq.artistId}`}
                   className="text-indigo-600 hover:text-indigo-700 font-medium"

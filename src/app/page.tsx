@@ -38,7 +38,7 @@ export default async function HomePage() {
               href="/artists"
               className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 text-white font-semibold border border-white/30 hover:bg-white/20 transition-colors text-sm"
             >
-              作家を見る
+              クリエイターを見る
             </Link>
           </div>
         </div>
@@ -89,12 +89,12 @@ export default async function HomePage() {
           {featuredArtists.length > 0 && (
             <section>
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-xl font-bold text-gray-900">注目作家</h2>
+                <h2 className="text-xl font-bold text-gray-900">注目クリエイター</h2>
                 <Link href="/artists" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                   すべて見る →
                 </Link>
               </div>
-              <p className="text-xs text-gray-400 mb-5">作品群から気になる作家を見つけられます。</p>
+              <p className="text-xs text-gray-400 mb-5">作品群から気になるクリエイターを見つけられます。</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {featuredArtists.map((artist) => (
                   <ArtistCard key={artist.id} artist={artist} />

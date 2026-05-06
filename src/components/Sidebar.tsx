@@ -111,13 +111,13 @@ function SidebarContent({ data }: { data: SidebarData }) {
             href="/works?trainingType=light"
             className="px-2 py-0.5 text-[11px] font-medium bg-blue-50 text-blue-700 rounded-full border border-blue-200 hover:bg-blue-100 transition-colors"
           >
-            学習 Light
+            学習 軽度
           </Link>
           <Link
             href="/works?trainingType=standard"
             className="px-2 py-0.5 text-[11px] font-medium bg-orange-50 text-orange-700 rounded-full border border-orange-200 hover:bg-orange-100 transition-colors"
           >
-            学習 Standard
+            学習 標準
           </Link>
         </div>
       </div>

@@ -151,25 +151,25 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
                 <span className="text-gray-500">商用利用:<InfoTooltip text="商用目的での利用可否を示します" /></span>{" "}
                 <span className="font-medium">
                   {licenseValueText(license.commercial)}
-                  {license.commercial === "consult" && <InfoTooltip text="作家との個別確認が必要な条件です" />}
+                  {license.commercial === "consult" && <InfoTooltip text="クリエイターとの個別確認が必要な条件です" />}
                 </span>
               </div>
               <div>
                 <span className="text-gray-500">成人向け利用:<InfoTooltip text="成人向けコンテンツでの利用可否を示します" /></span>{" "}
                 <span className="font-medium">
                   {licenseValueText(license.adult)}
-                  {license.adult === "consult" && <InfoTooltip text="作家との個別確認が必要な条件です" />}
+                  {license.adult === "consult" && <InfoTooltip text="クリエイターとの個別確認が必要な条件です" />}
                 </span>
               </div>
               <div>
-                <span className="text-gray-500">AI学習利用:<InfoTooltip text="作家が許可するAI学習利用の範囲を示します" /></span>{" "}
+                <span className="text-gray-500">AI学習利用:<InfoTooltip text="クリエイターが許可するAI学習利用の範囲を示します" /></span>{" "}
                 <span className="font-medium">{trainingTypeText(license.trainingType)}</span>
               </div>
               <div>
                 <span className="text-gray-500">再配布:<InfoTooltip text="この作品を第三者に再配布できるかを示します" /></span>{" "}
                 <span className="font-medium">
                   {licenseValueText(license.redistribution)}
-                  {license.redistribution === "consult" && <InfoTooltip text="作家との個別確認が必要な条件です" />}
+                  {license.redistribution === "consult" && <InfoTooltip text="クリエイターとの個別確認が必要な条件です" />}
                 </span>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default function WorkDetailTabs({ artwork }: WorkDetailTabsProps) {
             {/* ログイン済み・developer でない */}
             {user && acquireStatus && !acquireStatus.isDeveloper && (
               <p className="text-sm text-gray-400">
-                Developer アカウントで取得できます
+                開発者アカウントで取得できます
               </p>
             )}
 

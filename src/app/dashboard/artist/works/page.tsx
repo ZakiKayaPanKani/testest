@@ -7,6 +7,12 @@ import { useAuth } from "@/lib/auth";
 import TagPills from "@/components/TagPills";
 import type { DashboardWork, LicenseValue, TrainingType } from "@/lib/types";
 
+const trainingTypeLabels: Record<string, string> = {
+  light: "軽度",
+  standard: "標準",
+  strong: "強度",
+};
+
 const statusStyles: Record<string, string> = {
   public: "bg-green-100 text-green-700",
   private: "bg-gray-100 text-gray-600",
@@ -41,7 +47,7 @@ function getLicenseHighlights(
     terms.trainingType === "standard" ||
     terms.trainingType === "strong"
   ) {
-    items.push(`学習: ${terms.trainingType as TrainingType}`);
+    items.push(`学習: ${trainingTypeLabels[terms.trainingType as TrainingType] ?? terms.trainingType}`);
   }
 
   return items.slice(0, 2);
@@ -79,7 +85,7 @@ export default function WorksListPage() {
   if (isLoading || (user?.isArtist && dataLoading)) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <div className="animate-pulse text-gray-400">Loading...</div>
+        <div className="animate-pulse text-gray-400">読み込み中...</div>
       </div>
     );
   }

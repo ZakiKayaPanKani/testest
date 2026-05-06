@@ -68,7 +68,7 @@ export default function EditWorkPage() {
   if (isLoading || (user?.isArtist && dataLoading)) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <div className="animate-pulse text-gray-400">Loading...</div>
+        <div className="animate-pulse text-gray-400">読み込み中...</div>
       </div>
     );
   }
@@ -144,7 +144,7 @@ export default function EditWorkPage() {
         </Link>
         <h1 className="text-3xl font-bold text-gray-900 mt-2">作品を編集</h1>
         <p className="mt-1 text-sm text-gray-500">
-          作品情報とライセンス設定を編集できます。
+          作品情報と利用条件を編集できます。
         </p>
       </div>
 

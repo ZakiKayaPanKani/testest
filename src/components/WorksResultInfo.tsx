@@ -7,9 +7,15 @@ interface WorksResultInfoProps {
   hasActiveFilters: boolean;
 }
 
+const trainingTypeLabels: Record<string, string> = {
+  light: "軽度",
+  standard: "標準",
+  strong: "強度",
+};
+
 const filterLabels: { key: keyof WorksSearchFilters; render: (v: string) => string }[] = [
   { key: "q", render: (v) => `"${v}"` },
-  { key: "trainingType", render: (v) => `学習: ${v}` },
+  { key: "trainingType", render: (v) => `学習: ${trainingTypeLabels[v] ?? v}` },
   { key: "commercial", render: () => "商用OK" },
   { key: "adult", render: () => "成人向けOK" },
   { key: "consult", render: () => "要相談除く" },

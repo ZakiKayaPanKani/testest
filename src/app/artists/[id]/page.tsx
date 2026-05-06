@@ -86,10 +86,10 @@ export default async function ArtistDetailPage({ params }: ArtistDetailPageProps
       <DeveloperOnly>
         <section className="mb-10">
           <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-            <h2 className="text-xs font-semibold text-gray-700 mb-1">この作家の許諾方針</h2>
+            <h2 className="text-xs font-semibold text-gray-700 mb-1">このクリエイターの許諾方針</h2>
             <p className="text-xs text-gray-600">{artist.policySummary}</p>
             <p className="text-[10px] text-gray-400 mt-2">
-              この内容はDeveloper向けの補助情報です。作品ごとの利用条件は各作品詳細で確認してください。
+              この内容は開発者向けの補助情報です。作品ごとの利用条件は各作品詳細で確認してください。
             </p>
           </div>
         </section>
@@ -115,7 +115,7 @@ export default async function ArtistDetailPage({ params }: ArtistDetailPageProps
           href="/artists"
           className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
         >
-          &larr; 作家一覧へ戻る
+          &larr; クリエイター一覧へ戻る
         </Link>
       </div>
     </div>
