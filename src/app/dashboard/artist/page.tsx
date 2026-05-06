@@ -60,7 +60,7 @@ export default function ArtistDashboardPage() {
   if (isLoading || (user?.isArtist && dataLoading)) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <div className="animate-pulse text-gray-400">Loading...</div>
+        <div className="animate-pulse text-gray-400">読み込み中...</div>
       </div>
     );
   }
@@ -78,23 +78,23 @@ export default function ArtistDashboardPage() {
             </svg>
           </div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">
-            Artist tools are not enabled for this account yet.
+            このアカウントではクリエイター機能がまだ有効になっていません
           </h2>
           <p className="text-sm text-gray-500 mb-6 max-w-md mx-auto">
-            アーティストツールを有効にすると、作品の公開・管理、ライセンス設定、統計閲覧などの機能が利用できます。
+            クリエイター機能を有効にすると、作品の公開・管理、ライセンス設定、統計閲覧などの機能が利用できます。
           </p>
           <div className="flex items-center justify-center gap-3">
             <button
               onClick={() => alert("この機能はプロトタイプでは利用できません。デモアカウント artist@artli.dev でお試しください。")}
               className="px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
             >
-              Enable Artist Tools
+              クリエイター機能を有効にする
             </button>
             <Link
               href="/"
               className="px-5 py-2.5 text-sm font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              Back to Home
+              ホームに戻る
             </Link>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function ArtistDashboardPage() {
       {/* Page header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">アーティストダッシュボード</h1>
+          <h1 className="text-3xl font-bold text-gray-900">クリエイターダッシュボード</h1>
           <p className="mt-1 text-sm text-gray-500">
             おかえりなさい、{profile?.displayName ?? user.displayName}
           </p>

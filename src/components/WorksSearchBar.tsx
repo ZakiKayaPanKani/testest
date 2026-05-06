@@ -6,9 +6,9 @@ import DeveloperOnly from "@/components/DeveloperOnly";
 import type { WorksSearchFilters } from "@/lib/queries";
 
 const trainingTypes = [
-  { value: "light", label: "Light" },
-  { value: "standard", label: "Standard" },
-  { value: "strong", label: "Strong" },
+  { value: "light", label: "軽度" },
+  { value: "standard", label: "標準" },
+  { value: "strong", label: "強度" },
 ] as const;
 
 interface WorksSearchBarProps {
@@ -92,7 +92,7 @@ export default function WorksSearchBar({ filters }: WorksSearchBarProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="タイトル、タグ、作家名で検索..."
+            placeholder="タイトル、タグ、クリエイター名で検索..."
             className="w-full pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>

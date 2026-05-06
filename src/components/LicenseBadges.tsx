@@ -36,11 +36,11 @@ function trainingBadgeClass(type: TrainingType): string {
 function trainingLabel(type: TrainingType): string {
   switch (type) {
     case "light":
-      return "Light";
+      return "軽度";
     case "standard":
-      return "Standard";
+      return "標準";
     case "strong":
-      return "Strong";
+      return "強度";
   }
 }
 
