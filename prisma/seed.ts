@@ -88,8 +88,17 @@ async function main() {
       avatarUrl: "https://picsum.photos/seed/user8/200/200",
     },
   });
+  const user9 = await prisma.user.create({
+    data: {
+      slug: "user-9",
+      email: "aoi@artli.dev",
+      password: "password",
+      displayName: "Aoi Mizuno",
+      avatarUrl: "https://picsum.photos/seed/user9/200/200",
+    },
+  });
 
-  // ─── Artist Profiles (6) ─────────────────────────────────────────────────────
+  // ─── Artist Profiles (7) ─────────────────────────────────────────────────────
   const artist1 = await prisma.artistProfile.create({
     data: {
       slug: "artist-1",
@@ -162,6 +171,18 @@ async function main() {
       policySummary: "商用利用不可。学習利用不可。個人鑑賞のみ。",
     },
   });
+  const artist7 = await prisma.artistProfile.create({
+    data: {
+      slug: "artist-7",
+      userId: user9.id,
+      displayName: "Aoi Mizuno",
+      bio: "背景美術と都市風景を中心に制作。夕景や水彩タッチの作品が多い。",
+      iconUrl: "https://picsum.photos/seed/artist7/200/200",
+      links: ["https://aoi-mizuno.art"],
+      styleTags: ["背景美術", "都市", "夕景", "水彩", "コンセプトアート"],
+      policySummary: "商用利用可。学習はスタンダードまで許可。再配布は応相談。",
+    },
+  });
 
   // ─── Developer Profiles (2) ──────────────────────────────────────────────────
   const devProfile1 = await prisma.developerProfile.create({
@@ -197,6 +218,7 @@ async function main() {
     "Entropy", "Waves",
     "Landscape", "Character Design", "Manga",
     "風景", "キャラクター", "背景", "ファンタジー", "SF", "アニメ", "水彩", "ストリート", "抽象",
+    "和風", "制服", "メカ", "都市", "夕景", "厚塗り", "コンセプトアート", "立ち絵", "背景美術",
   ];
 
   const uniqueTagNames = [...new Set(allTagNames)];
@@ -701,7 +723,285 @@ async function main() {
     },
   });
 
-  // ─── Acquisitions (9) ────────────────────────────────────────────────────────
+  // ─── Works for artist-7 Aoi Mizuno (art-22 to art-25) ───────────────────────
+  const art22 = await prisma.work.create({
+    data: {
+      slug: "art-22",
+      title: "夕暮れの港町",
+      description: "夕日に染まる港町の街並みを水彩タッチで描いた背景美術。船影と提灯の光が穏やかな余韻を残す。",
+      coverImageUrl: "https://picsum.photos/seed/art22/800/600",
+      status: "public",
+      likesCount: 142,
+      commentsCount: 6,
+      artistProfileId: artist7.id,
+      license: {
+        create: {
+          commercial: "allowed",
+          adult: "denied",
+          trainingType: "standard",
+          redistribution: "consult",
+          priceJpy: 3500,
+        },
+      },
+      tags: { connect: connectTags(["背景美術", "都市", "夕景", "水彩", "Landscape", "City", "Sunset", "Watercolor"]) },
+    },
+  });
+
+  const art23 = await prisma.work.create({
+    data: {
+      slug: "art-23",
+      title: "雨の東京タワー",
+      description: "雨に煙る東京タワーを背景に、濡れた路面に映るネオンを水彩で表現した都市風景。",
+      coverImageUrl: "https://picsum.photos/seed/art23/800/600",
+      status: "public",
+      likesCount: 98,
+      commentsCount: 4,
+      artistProfileId: artist7.id,
+      license: {
+        create: {
+          commercial: "allowed",
+          adult: "denied",
+          trainingType: "light",
+          redistribution: "denied",
+          priceJpy: 2800,
+        },
+      },
+      tags: { connect: connectTags(["背景美術", "都市", "水彩", "Landscape", "City", "Watercolor"]) },
+    },
+  });
+
+  const art24 = await prisma.work.create({
+    data: {
+      slug: "art-24",
+      title: "廃墟の温室（WIP）",
+      description: "放棄された温室と蔦に覆われたガラス越しの光を描いた制作途中作品。色味の検証中。",
+      coverImageUrl: "https://picsum.photos/seed/art24/800/600",
+      status: "private",
+      likesCount: 0,
+      commentsCount: 0,
+      artistProfileId: artist7.id,
+      license: {
+        create: {
+          commercial: "consult",
+          adult: "denied",
+          trainingType: "light",
+          redistribution: "denied",
+          priceJpy: 3000,
+        },
+      },
+      tags: { connect: connectTags(["背景美術", "都市", "Landscape", "City"]) },
+    },
+  });
+
+  const art25 = await prisma.work.create({
+    data: {
+      slug: "art-25",
+      title: "新コンセプト案",
+      description: "新規プロジェクト向けのコンセプトアート草案。世界観のキーカラーと構図を模索中。",
+      coverImageUrl: "https://picsum.photos/seed/art25/800/600",
+      status: "draft",
+      likesCount: 0,
+      commentsCount: 0,
+      artistProfileId: artist7.id,
+      license: {
+        create: {
+          commercial: "consult",
+          adult: "denied",
+          trainingType: "standard",
+          redistribution: "consult",
+          priceJpy: 4000,
+        },
+      },
+      tags: { connect: connectTags(["コンセプトアート", "Concept Art"]) },
+    },
+  });
+
+  // ─── Additional works for existing artists (art-26 to art-33) ───────────────
+  const art26 = await prisma.work.create({
+    data: {
+      slug: "art-26",
+      title: "霧の森の境界",
+      description: "霧に包まれた古い森の境界線を歩く旅人を幻想的に描いた未公開作品。",
+      coverImageUrl: "https://picsum.photos/seed/art26/800/600",
+      status: "private",
+      likesCount: 0,
+      commentsCount: 0,
+      artistProfileId: artist1.id,
+      license: {
+        create: {
+          commercial: "consult",
+          adult: "denied",
+          trainingType: "light",
+          redistribution: "denied",
+          priceJpy: 3200,
+        },
+      },
+      tags: { connect: connectTags(["Fantasy", "Landscape", "ファンタジー", "風景"]) },
+    },
+  });
+
+  const art27 = await prisma.work.create({
+    data: {
+      slug: "art-27",
+      title: "竜の卵（設定画）",
+      description: "新作ファンタジー向けの竜の卵設定画。質感や模様のバリエーションを検討中。",
+      coverImageUrl: "https://picsum.photos/seed/art27/800/600",
+      status: "draft",
+      likesCount: 0,
+      commentsCount: 0,
+      artistProfileId: artist1.id,
+      license: {
+        create: {
+          commercial: "consult",
+          adult: "denied",
+          trainingType: "light",
+          redistribution: "denied",
+          priceJpy: 2500,
+        },
+      },
+      tags: { connect: connectTags(["Fantasy", "Concept Art", "ファンタジー", "コンセプトアート"]) },
+    },
+  });
+
+  const art28 = await prisma.work.create({
+    data: {
+      slug: "art-28",
+      title: "メイド服のキャラデザ",
+      description: "オリジナルキャラクター用のメイド服衣装デザイン。表情差分と立ち絵を含む未公開作品。",
+      coverImageUrl: "https://picsum.photos/seed/art28/800/600",
+      status: "private",
+      likesCount: 0,
+      commentsCount: 0,
+      artistProfileId: artist5.id,
+      license: {
+        create: {
+          commercial: "allowed",
+          adult: "allowed",
+          trainingType: "standard",
+          redistribution: "denied",
+          priceJpy: 3200,
+        },
+      },
+      tags: { connect: connectTags(["Anime", "Character Design", "アニメ", "キャラクター", "制服", "立ち絵"]) },
+    },
+  });
+
+  const art29 = await prisma.work.create({
+    data: {
+      slug: "art-29",
+      title: "新作RPGキャラ案",
+      description: "新作RPG向けのキャラクター案。和風モチーフを取り入れた衣装デザインを試作中。",
+      coverImageUrl: "https://picsum.photos/seed/art29/800/600",
+      status: "draft",
+      likesCount: 0,
+      commentsCount: 0,
+      artistProfileId: artist5.id,
+      license: {
+        create: {
+          commercial: "allowed",
+          adult: "denied",
+          trainingType: "standard",
+          redistribution: "consult",
+          priceJpy: 2800,
+        },
+      },
+      tags: { connect: connectTags(["Anime", "Character Design", "アニメ", "キャラクター", "和風"]) },
+    },
+  });
+
+  const art30 = await prisma.work.create({
+    data: {
+      slug: "art-30",
+      title: "決戦のメカ",
+      description: "クライマックスシーン向けの主役メカ。重装甲と推進機関のディテールを厚塗りで描き込んだ作品。",
+      coverImageUrl: "https://picsum.photos/seed/art30/800/600",
+      status: "public",
+      likesCount: 221,
+      commentsCount: 9,
+      artistProfileId: artist2.id,
+      license: {
+        create: {
+          commercial: "allowed",
+          adult: "denied",
+          trainingType: "standard",
+          redistribution: "denied",
+          priceJpy: 4800,
+        },
+      },
+      tags: { connect: connectTags(["Mecha", "Sci-Fi", "Concept Art", "メカ", "SF", "コンセプトアート", "厚塗り"]) },
+    },
+  });
+
+  const art31 = await prisma.work.create({
+    data: {
+      slug: "art-31",
+      title: "雨上がりの紫陽花",
+      description: "雨上がりの庭先に咲く紫陽花を水彩タッチで描いた一枚。柔らかな光と滴がアクセント。",
+      coverImageUrl: "https://picsum.photos/seed/art31/800/600",
+      status: "public",
+      likesCount: 167,
+      commentsCount: 6,
+      artistProfileId: artist3.id,
+      license: {
+        create: {
+          commercial: "allowed",
+          adult: "denied",
+          trainingType: "light",
+          redistribution: "allowed",
+          priceJpy: 2100,
+        },
+      },
+      tags: { connect: connectTags(["Watercolor", "Nature", "水彩", "風景"]) },
+    },
+  });
+
+  const art32 = await prisma.work.create({
+    data: {
+      slug: "art-32",
+      title: "渋谷スクランブル",
+      description: "夜の渋谷スクランブル交差点をストリートアート風に再構築。ネオンと群衆のリズムを表現。",
+      coverImageUrl: "https://picsum.photos/seed/art32/800/600",
+      status: "public",
+      likesCount: 188,
+      commentsCount: 8,
+      artistProfileId: artist4.id,
+      license: {
+        create: {
+          commercial: "consult",
+          adult: "denied",
+          trainingType: "light",
+          redistribution: "consult",
+          priceJpy: 3800,
+        },
+      },
+      tags: { connect: connectTags(["Street Art", "Urban", "ストリート", "都市", "夕景"]) },
+    },
+  });
+
+  const art33 = await prisma.work.create({
+    data: {
+      slug: "art-33",
+      title: "Quantum Foam",
+      description: "量子論的な揺らぎを抽象化したジェネラティブ作品。微細な粒子が無限のパターンを描く。",
+      coverImageUrl: "https://picsum.photos/seed/art33/800/600",
+      status: "public",
+      likesCount: 76,
+      commentsCount: 2,
+      artistProfileId: artist6.id,
+      license: {
+        create: {
+          commercial: "denied",
+          adult: "denied",
+          trainingType: "light",
+          redistribution: "denied",
+          priceJpy: 5800,
+        },
+      },
+      tags: { connect: connectTags(["Abstract", "Generative", "Digital", "抽象"]) },
+    },
+  });
+
+  // ─── Acquisitions (14) ───────────────────────────────────────────────────────
   // Helper to get license snapshot from a work
   async function getLicenseSnapshot(workId: string) {
     const license = await prisma.license.findUnique({ where: { workId } });
@@ -823,8 +1123,64 @@ async function main() {
     },
   });
 
+  // Additional acquisitions: Dev Studio (devProfile1) +2
+  await prisma.acquisition.create({
+    data: {
+      developerProfileId: devProfile1.id,
+      workId: art15.id,
+      priceJpy: 2500,
+      licenseSnapshot: await getLicenseSnapshot(art15.id),
+      workSnapshot: await getWorkSnapshot(art15.id),
+      acquiredAt: new Date("2026-01-10"),
+    },
+  });
+  await prisma.acquisition.create({
+    data: {
+      developerProfileId: devProfile1.id,
+      workId: art23.id,
+      priceJpy: 2800,
+      licenseSnapshot: await getLicenseSnapshot(art23.id),
+      workSnapshot: await getWorkSnapshot(art23.id),
+      acquiredAt: new Date("2026-01-20"),
+    },
+  });
+
+  // Additional acquisitions: Sakura Creative (devProfile2) +3
+  await prisma.acquisition.create({
+    data: {
+      developerProfileId: devProfile2.id,
+      workId: art21.id,
+      priceJpy: 2200,
+      licenseSnapshot: await getLicenseSnapshot(art21.id),
+      workSnapshot: await getWorkSnapshot(art21.id),
+      acquiredAt: new Date("2026-02-05"),
+    },
+  });
+  await prisma.acquisition.create({
+    data: {
+      developerProfileId: devProfile2.id,
+      workId: art30.id,
+      priceJpy: 4800,
+      licenseSnapshot: await getLicenseSnapshot(art30.id),
+      workSnapshot: await getWorkSnapshot(art30.id),
+      acquiredAt: new Date("2026-02-15"),
+    },
+  });
+  await prisma.acquisition.create({
+    data: {
+      developerProfileId: devProfile2.id,
+      workId: art31.id,
+      priceJpy: 2100,
+      licenseSnapshot: await getLicenseSnapshot(art31.id),
+      workSnapshot: await getWorkSnapshot(art31.id),
+      acquiredAt: new Date("2026-02-25"),
+    },
+  });
+
   // Suppress unused variable warnings
   void user1;
+  void user9;
+  void artist7;
   void art2;
   void art10;
   void art12;
@@ -837,6 +1193,18 @@ async function main() {
   void art19;
   void art20;
   void art21;
+  void art22;
+  void art23;
+  void art24;
+  void art25;
+  void art26;
+  void art27;
+  void art28;
+  void art29;
+  void art30;
+  void art31;
+  void art32;
+  void art33;
 
   console.log("Seed completed successfully!");
 }
