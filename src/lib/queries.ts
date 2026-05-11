@@ -116,18 +116,26 @@ export async function searchPublicWorks(
   const andConditions: Prisma.WorkWhereInput[] = [];
 
   if (filters.q && filters.q.trim()) {
-    const q = filters.q.trim();
-    andConditions.push({
-      OR: [
-        { title: { contains: q, mode: "insensitive" } },
-        { tags: { some: { name: { contains: q, mode: "insensitive" } } } },
-        {
-          artistProfile: {
-            displayName: { contains: q, mode: "insensitive" },
+    const keywords = filters.q
+      .trim()
+      .split(/[\s\u3000]+/)
+      .filter((k) => k);
+    for (const keyword of keywords) {
+      andConditions.push({
+        OR: [
+          { title: { contains: keyword, mode: "insensitive" } },
+          { description: { contains: keyword, mode: "insensitive" } },
+          {
+            tags: { some: { name: { contains: keyword, mode: "insensitive" } } },
           },
-        },
-      ],
-    });
+          {
+            artistProfile: {
+              displayName: { contains: keyword, mode: "insensitive" },
+            },
+          },
+        ],
+      });
+    }
   }
 
   if (
