@@ -42,20 +42,6 @@ export default function ArtworkCard({ artwork }: ArtworkCardProps) {
           size="sm"
         />
 
-        {/* Tags */}
-        {artwork.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {artwork.tags.slice(0, 3).map((t) => (
-              <span key={t.name} className="inline-flex items-center px-2 py-0.5 text-[10px] font-medium bg-gray-100 text-gray-600 rounded-full">
-                {t.name}
-              </span>
-            ))}
-            {artwork.tags.length > 3 && (
-              <span className="text-[10px] text-gray-400">+{artwork.tags.length - 3}</span>
-            )}
-          </div>
-        )}
-
         {/* License badges - Developer限定 */}
         {artwork.license && (
           <DeveloperOnly>

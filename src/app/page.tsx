@@ -45,7 +45,7 @@ export default async function HomePage() {
       </section>
 
       {/* Main content with sidebar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 block lg:flex lg:gap-8">
         <Sidebar className="hidden lg:block flex-shrink-0" data={sidebarData} />
         <div className="flex-1 min-w-0 space-y-14">
 

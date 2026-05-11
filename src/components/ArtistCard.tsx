@@ -57,7 +57,7 @@ export default function ArtistCard({ artist }: ArtistCardProps) {
               <p className="text-xs text-gray-500 line-clamp-1">{artist.bio}</p>
             </div>
           </div>
-          <TagPills tags={artist.styleTags} limit={3} />
+          <TagPills tags={artist.styleTags} limit={2} />
         </div>
       </div>
     </Link>

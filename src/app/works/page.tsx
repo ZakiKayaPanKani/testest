@@ -45,7 +45,7 @@ export default async function WorksPage({ searchParams }: WorksPageProps) {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex gap-8" data-page="works">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 block lg:flex lg:gap-8" data-page="works">
       <Sidebar className="hidden lg:block flex-shrink-0" data={sidebarData} />
       <div className="flex-1 min-w-0">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">作品を探す</h1>
