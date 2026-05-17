@@ -52,17 +52,17 @@ export default async function HomePage() {
           {/* おすすめ作品 */}
           {featuredWorks.length > 0 && (
             <section>
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-xl font-bold text-gray-900">おすすめ作品</h2>
-                <Link href="/works" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
-                  すべて見る →
-                </Link>
-              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">おすすめ作品</h2>
               <p className="text-xs text-gray-400 mb-5">Artliに投稿された注目作品です。</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
                 {featuredWorks.map((artwork) => (
                   <ArtworkCard key={artwork.id} artwork={artwork} />
                 ))}
+              </div>
+              <div className="text-center mt-4">
+                <Link href="/works" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                  すべて見る →
+                </Link>
               </div>
             </section>
           )}
@@ -70,17 +70,17 @@ export default async function HomePage() {
           {/* 新着作品 */}
           {newWorks.length > 0 && (
             <section>
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-xl font-bold text-gray-900">新着作品</h2>
-                <Link href="/works" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
-                  すべて見る →
-                </Link>
-              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">新着作品</h2>
               <p className="text-xs text-gray-400 mb-5">最近投稿・更新された作品です。</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
                 {newWorks.map((artwork) => (
                   <ArtworkCard key={artwork.id} artwork={artwork} />
                 ))}
+              </div>
+              <div className="text-center mt-4">
+                <Link href="/works" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                  すべて見る →
+                </Link>
               </div>
             </section>
           )}
@@ -88,17 +88,17 @@ export default async function HomePage() {
           {/* 注目作家 */}
           {featuredArtists.length > 0 && (
             <section>
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-xl font-bold text-gray-900">注目クリエイター</h2>
-                <Link href="/artists" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
-                  すべて見る →
-                </Link>
-              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">注目クリエイター</h2>
               <p className="text-xs text-gray-400 mb-5">作品群から気になるクリエイターを見つけられます。</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {featuredArtists.map((artist) => (
                   <ArtistCard key={artist.id} artist={artist} />
                 ))}
+              </div>
+              <div className="text-center mt-4">
+                <Link href="/artists" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                  すべて見る →
+                </Link>
               </div>
             </section>
           )}
