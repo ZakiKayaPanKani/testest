@@ -18,17 +18,22 @@ interface WorksPageProps {
     adult?: string;
     commercial?: string;
     consult?: string;
+    sort?: string;
   }>;
 }
 
 export default async function WorksPage({ searchParams }: WorksPageProps) {
   const params = await searchParams;
+  const sort: "newest" | "popular" =
+    params.sort === "popular" ? "popular" : "newest";
+
   const filters: WorksSearchFilters = {
     q: params.q,
     trainingType: params.trainingType,
     adult: params.adult,
     commercial: params.commercial,
     consult: params.consult,
+    sort,
   };
 
   const [{ works, total }, sidebarData] = await Promise.all([

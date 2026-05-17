@@ -71,8 +71,23 @@ export default function WorksSearchBar({ filters }: WorksSearchBarProps) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6 space-y-3">
-      {/* Search bar */}
+      {/* Sort + Search bar */}
       <div className="flex gap-2">
+        <select
+          value={searchParams.get("sort") ?? "newest"}
+          onChange={(e) =>
+            pushFilters({
+              sort:
+                e.target.value === "popular"
+                  ? "popular"
+                  : undefined,
+            })
+          }
+          className="px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        >
+          <option value="newest">新着順</option>
+          <option value="popular">人気順</option>
+        </select>
         <div className="relative flex-1">
           <svg
             className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
