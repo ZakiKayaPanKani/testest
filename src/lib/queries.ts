@@ -107,6 +107,7 @@ export interface WorksSearchFilters {
   adult?: string;
   commercial?: string;
   consult?: string;
+  sort?: "newest" | "popular";
 }
 
 export async function searchPublicWorks(
@@ -171,10 +172,17 @@ export async function searchPublicWorks(
     where.AND = andConditions;
   }
 
+  const orderBy:
+    | Prisma.WorkOrderByWithRelationInput
+    | Prisma.WorkOrderByWithRelationInput[] =
+    filters.sort === "popular"
+      ? [{ likesCount: "desc" }, { createdAt: "desc" }]
+      : { createdAt: "desc" };
+
   const works = await prisma.work.findMany({
     where,
     include: workInclude,
-    orderBy: { createdAt: "desc" },
+    orderBy,
   });
 
   return { works: works.map(toWorkForCard), total: works.length };
