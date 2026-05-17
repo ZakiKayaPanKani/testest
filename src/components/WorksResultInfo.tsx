@@ -16,8 +16,7 @@ const trainingTypeLabels: Record<string, string> = {
   strong: "強度",
 };
 
-const filterLabels: { key: keyof WorksSearchFilters; render: (v: string) => string }[] = [
-  { key: "q", render: (v) => `"${v}"` },
+const nonQFilterLabels: { key: Exclude<keyof WorksSearchFilters, "q" | "sort">; render: (v: string) => string }[] = [
   { key: "trainingType", render: (v) => `学習: ${trainingTypeLabels[v] ?? v}` },
   { key: "commercial", render: () => "商用OK" },
   { key: "adult", render: () => "成人向けOK" },
@@ -34,6 +33,22 @@ export default function WorksResultInfo({
 
   if (!hasActiveFilters) return null;
 
+  const qKeywords = filters.q
+    ? filters.q.split(/[\s\u3000]+/).filter((k) => k)
+    : [];
+
+  const handleRemoveKeyword = (keyword: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    const remaining = qKeywords.filter((k) => k !== keyword);
+    if (remaining.length > 0) {
+      params.set("q", remaining.join(" "));
+    } else {
+      params.delete("q");
+    }
+    const qs = params.toString();
+    router.push(qs ? `/works?${qs}` : "/works");
+  };
+
   const handleRemoveFilter = (key: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.delete(key);
@@ -45,7 +60,24 @@ export default function WorksResultInfo({
     <div className="flex flex-wrap items-center gap-2 mb-4">
       <span className="text-sm text-gray-500">{total}件</span>
 
-      {filterLabels.map(({ key, render }) => {
+      {qKeywords.map((keyword) => (
+        <span
+          key={`q-${keyword}`}
+          className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full"
+        >
+          &quot;{keyword}&quot;
+          <button
+            type="button"
+            onClick={() => handleRemoveKeyword(keyword)}
+            className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full hover:bg-gray-300 transition-colors text-gray-400 hover:text-gray-600"
+            aria-label={`${keyword} を削除`}
+          >
+            ×
+          </button>
+        </span>
+      ))}
+
+      {nonQFilterLabels.map(({ key, render }) => {
         const value = filters[key];
         if (!value) return null;
         return (
