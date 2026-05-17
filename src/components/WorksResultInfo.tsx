@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { WorksSearchFilters } from "@/lib/queries";
 
 interface WorksResultInfoProps {
@@ -26,7 +29,17 @@ export default function WorksResultInfo({
   filters,
   hasActiveFilters,
 }: WorksResultInfoProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   if (!hasActiveFilters) return null;
+
+  const handleRemoveFilter = (key: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete(key);
+    const qs = params.toString();
+    router.push(qs ? `/works?${qs}` : "/works");
+  };
 
   return (
     <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -38,9 +51,17 @@ export default function WorksResultInfo({
         return (
           <span
             key={key}
-            className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full"
+            className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full"
           >
             {render(value)}
+            <button
+              type="button"
+              onClick={() => handleRemoveFilter(key)}
+              className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full hover:bg-gray-300 transition-colors text-gray-400 hover:text-gray-600"
+              aria-label={`${render(value)} を削除`}
+            >
+              ×
+            </button>
           </span>
         );
       })}
