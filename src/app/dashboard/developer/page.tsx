@@ -121,6 +121,9 @@ export default function DeveloperDashboardPage() {
         <p className="mt-2 text-sm text-gray-500">
           取得済みの利用許諾と、取得時点の作品情報・利用条件の証跡を確認できます。
         </p>
+        <p className="mt-2 text-xs text-amber-600 font-medium">
+          ※許諾取得・証跡JSONは、βテスト中のプロトタイプ機能です。正式な契約・決済・権利移転を意味するものではありません。
+        </p>
       </div>
 
       {/* Summary cards */}
