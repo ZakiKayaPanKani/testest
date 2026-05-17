@@ -37,6 +37,7 @@ export default function AcquireModal({ license, acquiring, onConfirm, onCancel }
             <div>・再配布：{licenseValueText(license.redistribution)}</div>
           </div>
           <div className="text-xs text-gray-500 space-y-1">
+            <p className="font-medium text-amber-600">※本機能はβテスト中のプロトタイプ機能です。正式な契約・決済・権利移転を意味するものではありません。</p>
             <p>※条件はクリエイターによって設定されています</p>
             <p>※これは画像データの購入や著作権の譲渡ではありません。表示された利用条件に基づく利用許諾の取得です。</p>
             <p>※取得時点の作品情報と利用条件は、証跡として保存されます。</p>
